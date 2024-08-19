@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;  
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+body {
+  background: linear-gradient(#0008, #0008), url("/src/assets/cobblestone.png");
+  background-repeat: repeat;
+  background-size: 20%;
+}

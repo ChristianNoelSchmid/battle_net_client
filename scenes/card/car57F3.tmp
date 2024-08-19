@@ -1,0 +1,148 @@
+[gd_scene load_steps=12 format=3 uid="uid://qtn1ifib34pf"]
+
+[ext_resource type="Script" path="res://scenes/card/card.gd" id="1_fimft"]
+[ext_resource type="Texture2D" uid="uid://pd4d8wf0w0k2" path="res://assets/card.png" id="2_f06lw"]
+[ext_resource type="Texture2D" uid="uid://b6kkus7tv3pdg" path="res://assets/pixel.png" id="3_tyffw"]
+[ext_resource type="Texture2D" uid="uid://c8v5eycnhfbdu" path="res://assets/question_mark.png" id="3_y4y0m"]
+[ext_resource type="Texture2D" uid="uid://bwhmman2oflxi" path="res://assets/players/Chris.png" id="4_c7ldp"]
+[ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="5_e4tco"]
+[ext_resource type="Texture2D" uid="uid://bdxjiga37685h" path="res://assets/movie.png" id="5_jxlw0"]
+[ext_resource type="Texture2D" uid="uid://c0cmegrl5i5a4" path="res://assets/checkmark.png" id="7_w8c37"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5eada"]
+line_spacing = 0.0
+font = ExtResource("5_e4tco")
+font_size = 36
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0, 0, 0, 0)
+shadow_size = 0
+shadow_color = Color(0.407843, 0.407843, 0.407843, 0.443137)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6h63"]
+line_spacing = 0.0
+font = ExtResource("5_e4tco")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_08na1"]
+font = ExtResource("5_e4tco")
+font_size = 62
+
+[node name="Card" type="TextureRect"]
+anchors_preset = -1
+anchor_right = 0.431
+anchor_bottom = 1.077
+offset_right = 0.487976
+offset_bottom = 0.104004
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_f06lw")
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("1_fimft")
+consider_texture = ExtResource("3_y4y0m")
+confirmed_texture = ExtResource("7_w8c37")
+
+[node name="Border" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+layout_mode = 2
+offset_right = 496.0
+texture = ExtResource("3_tyffw")
+expand_mode = 1
+
+[node name="Image" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 2
+offset_top = 4.0
+offset_right = 496.0
+offset_bottom = 4.0
+texture = ExtResource("4_c7ldp")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_top = 8.0
+offset_right = 496.0
+offset_bottom = 45.0
+text = "Chris"
+label_settings = SubResource("LabelSettings_5eada")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+uppercase = true
+
+[node name="Description" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_top = 49.0
+offset_right = 496.0
+offset_bottom = 99.0
+text = "Has a doppelganger named \"EVIL CHRIS\". May be seen lurking about."
+label_settings = SubResource("LabelSettings_l6h63")
+autowrap_mode = 3
+
+[node name="TypeIcon" type="TextureRect" parent="."]
+layout_mode = 2
+offset_top = 103.0
+offset_right = 496.0
+offset_bottom = 103.0
+texture = ExtResource("5_jxlw0")
+expand_mode = 1
+
+[node name="StatusIcon" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 2
+offset_top = 107.0
+offset_right = 496.0
+offset_bottom = 107.0
+expand_mode = 1
+
+[node name="ConfirmPanel" type="Control" parent="."]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.095
+anchor_top = 0.064
+anchor_right = 0.896
+anchor_bottom = 0.934
+offset_left = -0.180004
+offset_top = 0.191998
+offset_right = 0.175995
+offset_bottom = 0.052002
+mouse_filter = 2
+
+[node name="Background" type="TextureRect" parent="ConfirmPanel"]
+modulate = Color(0, 0, 0, 0.94902)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.118
+anchor_top = -0.076
+anchor_right = 1.13
+anchor_bottom = 1.074
+offset_left = 0.00800323
+offset_top = 0.116001
+offset_right = 0.0057373
+offset_bottom = -0.0339966
+mouse_filter = 2
+texture = ExtResource("2_f06lw")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="ConfirmText" type="Label" parent="ConfirmPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.048
+anchor_top = 0.031
+anchor_right = 0.955
+anchor_bottom = 0.969
+offset_left = -0.0879993
+offset_top = 0.229
+offset_right = 0.019989
+offset_bottom = -0.229004
+text = "Add Guess
+"
+label_settings = SubResource("LabelSettings_08na1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

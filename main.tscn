@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5lw28t871lf1"]
+
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_l7ej4"]
+[ext_resource type="PackedScene" uid="uid://dqpr1l33pgc1f" path="res://scenes/main_menu/main_menu.tscn" id="2_v7ks0"]
+[ext_resource type="PackedScene" uid="uid://b8olgxfqyoncp" path="res://scenes/card_menu/card_menu.tscn" id="3_8qdwd"]
+[ext_resource type="PackedScene" uid="uid://bw27ywob164qw" path="res://scenes/loading_panel/loading_panel.tscn" id="4_i0txq"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_l7ej4")
+
+[node name="MainMenu" parent="." instance=ExtResource("2_v7ks0")]
+
+[node name="CardMenu" parent="." instance=ExtResource("3_8qdwd")]
+
+[node name="LoadingPanel" parent="." instance=ExtResource("4_i0txq")]
+visible = false
+
+[connection signal="loading_toggled" from="CardMenu" to="." method="toggle_loading"]

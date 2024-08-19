@@ -1,0 +1,118 @@
+[gd_scene load_steps=8 format=3 uid="uid://b8olgxfqyoncp"]
+
+[ext_resource type="Texture2D" uid="uid://vmiw8wpsmmky" path="res://assets/cobblestone.png" id="1_8lcqh"]
+[ext_resource type="Script" path="res://scenes/card_menu/card_menu.gd" id="1_l411a"]
+[ext_resource type="PackedScene" uid="uid://qtn1ifib34pf" path="res://scenes/card/card.tscn" id="2_j6v4e"]
+[ext_resource type="Texture2D" uid="uid://bmi72s1cpow7m" path="res://assets/person.png" id="3_w4813"]
+[ext_resource type="Texture2D" uid="uid://bybk4nheslgtp" path="res://assets/murder_weapon.png" id="4_005c2"]
+[ext_resource type="Texture2D" uid="uid://bdxjiga37685h" path="res://assets/movie.png" id="5_t2bf8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pc2yb"]
+bg_color = Color(0, 0, 0, 0.67451)
+
+[node name="CardMenu" type="Node"]
+script = ExtResource("1_l411a")
+card_scene = ExtResource("2_j6v4e")
+type_texs = Array[Texture2D]([ExtResource("3_w4813"), ExtResource("4_005c2"), ExtResource("5_t2bf8")])
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.545098, 0.545098, 0.545098, 1)
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 3.0
+offset_bottom = 504.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(6, 6)
+texture = ExtResource("1_8lcqh")
+stretch_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Row" type="HBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Column1" type="VBoxContainer" parent="ScrollContainer/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -48
+
+[node name="Card" parent="ScrollContainer/Row/Column1" instance=ExtResource("2_j6v4e")]
+visible = false
+layout_mode = 2
+
+[node name="Column2" type="VBoxContainer" parent="ScrollContainer/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -48
+
+[node name="Card2" parent="ScrollContainer/Row/Column2" instance=ExtResource("2_j6v4e")]
+visible = false
+layout_mode = 2
+
+[node name="Column3" type="VBoxContainer" parent="ScrollContainer/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -48
+
+[node name="Card2" parent="ScrollContainer/Row/Column3" instance=ExtResource("2_j6v4e")]
+visible = false
+layout_mode = 2
+
+[node name="GuessPanel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Buttons" type="HBoxContainer" parent="GuessPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.827
+anchor_right = 0.75
+anchor_bottom = 0.938
+offset_top = -6.51202
+offset_right = -6.10352e-05
+offset_bottom = -6.44006
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="GuessButton" type="Button" parent="GuessPanel/Buttons"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_pc2yb")
+text = "Guess"
+
+[node name="CancelButton" type="Button" parent="GuessPanel/Buttons"]
+visible = false
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_pc2yb")
+text = "Cancel"
+
+[connection signal="pressed" from="GuessPanel/Buttons/GuessButton" to="." method="_on_guess_pressed"]
+[connection signal="pressed" from="GuessPanel/Buttons/CancelButton" to="." method="_on_cancel_pressed"]

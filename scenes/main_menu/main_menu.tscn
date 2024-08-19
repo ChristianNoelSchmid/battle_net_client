@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqpr1l33pgc1f"]
+
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_aslvy"]
+[ext_resource type="Texture2D" uid="uid://buhx5gf0loyc5" path="res://assets/door.png" id="2_h1khn"]
+[ext_resource type="Texture2D" uid="uid://b20esvu6h674e" path="res://assets/door_highlight.png" id="3_cv5tb"]
+[ext_resource type="Texture2D" uid="uid://g7n1g0qir52l" path="res://assets/menu_untoggled.png" id="4_8awur"]
+[ext_resource type="Texture2D" uid="uid://c25yo1vjw20jp" path="res://assets/menu_toggled.png" id="5_msxd8"]
+[ext_resource type="Script" path="res://scenes/main_menu/nav_menu.gd" id="6_feywt"]
+[ext_resource type="PackedScene" uid="uid://bw27ywob164qw" path="res://scenes/loading_panel/loading_panel.tscn" id="7_cq8we"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_aslvy")
+
+[node name="Background" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_h1khn")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="QuestButton" type="TextureButton" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.293
+anchor_top = 0.38
+anchor_right = 0.679
+anchor_bottom = 1.002
+offset_left = -0.536011
+offset_top = -0.240021
+offset_right = -0.208008
+offset_bottom = -0.296082
+grow_horizontal = 2
+grow_vertical = 2
+texture_hover = ExtResource("3_cv5tb")
+stretch_mode = 0
+
+[node name="MenuHamburger" type="TextureButton" parent="."]
+texture_filter = 1
+anchors_preset = -1
+anchor_left = 0.928
+anchor_top = 0.045
+anchor_right = 0.972
+anchor_bottom = 0.123
+offset_left = -0.0560303
+offset_top = -0.160002
+offset_right = 0.255981
+offset_bottom = 0.295998
+texture_normal = ExtResource("4_8awur")
+texture_pressed = ExtResource("5_msxd8")
+stretch_mode = 0
+script = ExtResource("6_feywt")
+
+[node name="LoadingPanel" parent="." instance=ExtResource("7_cq8we")]
+visible = false
+
+[connection signal="pressed" from="Background/QuestButton" to="." method="on_quest_btn_pressed"]
