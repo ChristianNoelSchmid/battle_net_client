@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqpr1l33pgc1f"]
+[gd_scene load_steps=11 format=3 uid="uid://dqpr1l33pgc1f"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_aslvy"]
 [ext_resource type="Texture2D" uid="uid://buhx5gf0loyc5" path="res://assets/door.png" id="2_h1khn"]
@@ -7,6 +7,30 @@
 [ext_resource type="Texture2D" uid="uid://c25yo1vjw20jp" path="res://assets/menu_toggled.png" id="5_msxd8"]
 [ext_resource type="Script" path="res://scenes/main_menu/nav_menu.gd" id="6_feywt"]
 [ext_resource type="PackedScene" uid="uid://bw27ywob164qw" path="res://scenes/loading_panel/loading_panel.tscn" id="7_cq8we"]
+
+[sub_resource type="GDScript" id="GDScript_ft2um"]
+script/source = "extends Control 
+class_name QuestTypePanel
+
+signal battle_btn_pressed
+signal riddle_btn_pressed
+
+func on_battle_btn_pressed():
+	visible = false
+	battle_btn_pressed.emit()
+
+func on_riddle_btn_pressed():
+	visible = false
+	riddle_btn_pressed.emit()
+
+func on_close():
+	hide() "
+
+[sub_resource type="LabelSettings" id="LabelSettings_kman7"]
+font_size = 38
+
+[sub_resource type="Theme" id="Theme_coovd"]
+default_font_size = 26
 
 [node name="Main" type="Node"]
 script = ExtResource("1_aslvy")
@@ -40,6 +64,74 @@ grow_vertical = 2
 texture_hover = ExtResource("3_cv5tb")
 stretch_mode = 0
 
+[node name="QuestTypePanel" type="Panel" parent="Background"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.252
+anchor_top = 0.282
+anchor_right = 0.724
+anchor_bottom = 0.653
+offset_left = -0.304016
+offset_top = 0.263992
+offset_right = -0.0480347
+offset_bottom = -0.144043
+script = SubResource("GDScript_ft2um")
+
+[node name="Close" type="Button" parent="Background/QuestTypePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.943
+anchor_top = -0.004
+anchor_right = 0.998
+anchor_bottom = 0.125
+offset_left = 0.00799561
+offset_top = -0.04
+offset_right = 0.0880127
+text = "X"
+
+[node name="Label" type="Label" parent="Background/QuestTypePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.153
+anchor_top = 0.108
+anchor_right = 0.86
+anchor_bottom = 0.329
+offset_left = -0.23201
+offset_top = 0.0800037
+offset_right = 0.160004
+offset_bottom = 0.0399933
+text = "Choose a Quest Type"
+label_settings = SubResource("LabelSettings_kman7")
+
+[node name="ButtonBattle" type="Button" parent="Background/QuestTypePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.364
+anchor_top = 0.396
+anchor_right = 0.621
+anchor_bottom = 0.629
+offset_left = -0.0160065
+offset_top = -0.0400085
+offset_right = 0.175964
+offset_bottom = 0.0399933
+theme = SubResource("Theme_coovd")
+text = "BATTLE"
+
+[node name="ButtonRiddle" type="Button" parent="Background/QuestTypePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.364
+anchor_top = 0.671
+anchor_right = 0.621
+anchor_bottom = 0.904
+offset_left = -0.0160065
+offset_top = -0.0400085
+offset_right = 0.175964
+offset_bottom = 0.0399933
+theme = SubResource("Theme_coovd")
+text = "RIDDLE"
+
 [node name="MenuHamburger" type="TextureButton" parent="."]
 texture_filter = 1
 anchors_preset = -1
@@ -60,3 +152,6 @@ script = ExtResource("6_feywt")
 visible = false
 
 [connection signal="pressed" from="Background/QuestButton" to="." method="on_quest_btn_pressed"]
+[connection signal="pressed" from="Background/QuestTypePanel/Close" to="Background/QuestTypePanel" method="hide"]
+[connection signal="pressed" from="Background/QuestTypePanel/ButtonBattle" to="." method="on_battle_btn_pressed"]
+[connection signal="pressed" from="Background/QuestTypePanel/ButtonRiddle" to="." method="on_riddle_btn_pressed"]
