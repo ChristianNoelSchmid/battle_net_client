@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqaqy3w5xvrnr"]
+
+[ext_resource type="Script" path="res://scenes/login_scene/login_scene.gd" id="1_6k5id"]
+[ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="1_qsdcp"]
+
+[sub_resource type="Theme" id="Theme_7pthk"]
+default_font = ExtResource("1_qsdcp")
+default_font_size = 32
+
+[node name="LoginScene" type="Node2D"]
+script = ExtResource("1_6k5id")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1147.0
+offset_bottom = 642.0
+theme = SubResource("Theme_7pthk")
+
+[node name="VBox" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="HBoxUsername" type="HBoxContainer" parent="UI/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="LabelUsername" type="Label" parent="UI/VBox/HBoxUsername"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Username"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEditUsername" type="LineEdit" parent="UI/VBox/HBoxUsername"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+placeholder_text = "username"
+
+[node name="HBoxPassword" type="HBoxContainer" parent="UI/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="LabelPassword" type="Label" parent="UI/VBox/HBoxPassword"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Password"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEditPassword" type="LineEdit" parent="UI/VBox/HBoxPassword"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+placeholder_text = "password"
+secret = true
+
+[node name="ButtonLogin" type="Button" parent="UI/VBox"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Login
+"
+
+[connection signal="text_changed" from="UI/VBox/HBoxUsername/LineEditUsername" to="." method="on_input"]
+[connection signal="text_changed" from="UI/VBox/HBoxPassword/LineEditPassword" to="." method="on_input"]

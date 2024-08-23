@@ -23,7 +23,7 @@ var _considered_col_row: Array[int] = []
 var _guessed_col_rows = [-1, -1, -1]
 
 const COLUMN_CATS = ["players", "murder_weapons", "movies"]
-const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoiMjAyNC0wOC0xOVQxOToxNjozNS45Mzc4MjQzMDArMDA6MDAiLCJ1c2VyX2lkIjoiMSJ9.rb76jX74q9T66zltS6KX6fIjaY1OSqZgiJ7-0CV2Yy4"
+const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoiMjAyNC0wOC0yMVQwMjoxMDo1NS44MDc1MDY1MDArMDA6MDAiLCJ1c2VyX2lkIjoiMSJ9.VjiIjU2DBp9tGR-w40fsEejz16oiU7Zg9xX-KYIJ31E"
 var _resources: Dictionary
 
 func _ready():

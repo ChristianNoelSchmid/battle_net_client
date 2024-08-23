@@ -1,8 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://b38vyfmsmkp6a"]
+[gd_scene load_steps=8 format=3 uid="uid://b38vyfmsmkp6a"]
 
+[ext_resource type="Script" path="res://scenes/battle_scene/battle_scene.gd" id="1_20jma"]
 [ext_resource type="Texture2D" uid="uid://vmiw8wpsmmky" path="res://assets/cobblestone.png" id="1_gq0ns"]
+[ext_resource type="Texture2D" uid="uid://bwhmman2oflxi" path="res://assets/players/Chris.png" id="3_787ld"]
+[ext_resource type="Texture2D" uid="uid://dy71464adboss" path="res://assets/murder_weapons/murder_weapon_fruit_cake.png" id="4_kolho"]
+[ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="5_vcb2u"]
+
+[sub_resource type="Theme" id="Theme_irt5s"]
+default_font = ExtResource("5_vcb2u")
+default_font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_hbay1"]
+font_size = 32
+outline_size = 2
+outline_color = Color(0.447059, 0.447059, 0.447059, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.615686)
+shadow_offset = Vector2(3, 3)
 
 [node name="BattleScene" type="Node2D"]
+script = ExtResource("1_20jma")
 
 [node name="Background" type="TextureRect" parent="."]
 modulate = Color(0.545098, 0.545098, 0.545098, 1)
@@ -18,3 +35,88 @@ grow_vertical = 2
 scale = Vector2(6, 6)
 texture = ExtResource("1_gq0ns")
 stretch_mode = 1
+
+[node name="Chris" type="Sprite2D" parent="."]
+position = Vector2(223, 250)
+scale = Vector2(5.68551, 5.68551)
+texture = ExtResource("3_787ld")
+
+[node name="MurderWeaponFruitCake" type="Sprite2D" parent="."]
+position = Vector2(876, 257)
+scale = Vector2(6.58098, 6.58098)
+texture = ExtResource("4_kolho")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1155.0
+offset_bottom = 651.0
+theme = SubResource("Theme_irt5s")
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 1
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="AttackHeading" type="Label" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.1
+offset_top = -520.8
+offset_bottom = -500.82
+text = "Wilfred the Esteemed Wizard is ready to attack!"
+label_settings = SubResource("LabelSettings_hbay1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attack" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchor_right = 0.75
+anchor_bottom = 1.0
+
+[node name="Attack1" type="Button" parent="UI/Control/Attack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.25
+anchor_bottom = 1.0
+text = "Pithy Jibe"
+
+[node name="Attack2" type="Button" parent="UI/Control/Attack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 0.5
+anchor_bottom = 1.0
+text = "Guitar Riff"
+
+[node name="Attack3" type="Button" parent="UI/Control/Attack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.75
+anchor_bottom = 1.0
+text = "Mighty Leap"
+
+[node name="Attack4" type="Button" parent="UI/Control/Attack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Thunder Ring"
+
+[node name="Defend" type="Button" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Defend"
+
+[connection signal="pressed" from="UI/Control/Attack/Attack1" to="." method="on_send_message" binds= ["Attack::1"]]
+[connection signal="pressed" from="UI/Control/Attack/Attack2" to="." method="on_send_message" binds= ["Attack::2"]]
+[connection signal="pressed" from="UI/Control/Attack/Attack3" to="." method="on_send_message" binds= ["Attack::3"]]
+[connection signal="pressed" from="UI/Control/Attack/Attack4" to="." method="on_send_message" binds= ["Attack::4"]]
+[connection signal="pressed" from="UI/Control/Defend" to="." method="on_send_message" binds= ["Defend"]]
