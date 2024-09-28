@@ -1,11 +1,9 @@
 extends Node
 
-var _game_state_http_request: HTTPRequest
-var _quest_state_http_request: HTTPRequest
-var _start_quest_request: HTTPRequest
-
 var _quest_type_panel: QuestTypePanel 
 var _loading_panel: Control
+@onready var _menu_button: TextureButton = $MenuHamburger
+@onready var _menu: Control = $MenuHamburger/Menu
 
 func _ready():
 	_quest_type_panel = get_node("/root/Main/Background/QuestTypePanel")
@@ -14,68 +12,41 @@ func _ready():
 	_loading_panel = get_node("/root/Main/LoadingPanel")
 	_loading_panel.show()
 
-	_game_state_http_request = HTTPRequest.new()
-	_game_state_http_request.request_completed.connect(_on_game_state_response)
-	add_child(_game_state_http_request)
+	QuestState.initialize()
+	GameState.initialize()
 
-	_quest_state_http_request = HTTPRequest.new()
-	_quest_state_http_request.request_completed.connect(_on_quest_state_response)
-	add_child(_quest_state_http_request)
+	QuestState.on_quest_created.connect(func(_i): on_quest_btn_pressed())
 
-	_start_quest_request = HTTPRequest.new()
-	_start_quest_request.request_completed.connect(_on_start_quest_response)
-	add_child(_start_quest_request)
-
-	_game_state_http_request.request("%s/game/state" % Config.URL_ROOT,
-		["Authorization: Bearer %s" % Auth.access_token, "Content-Type: application/json"]
-	)
-	_quest_state_http_request.request("%s/quest/current" % Config.URL_ROOT,
-		["Authorization: Bearer %s" % Auth.access_token, "Content-Type: application/json"]
-	)
+func _process(_delta):
+	_loading_panel.visible = QuestState.is_loading() || GameState.is_loading()
+	_menu.visible = _menu_button.button_pressed
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		_menu_button.button_pressed = false
 
 # Signal Handlers
 func on_quest_btn_pressed():
-	_quest_type_panel.set_available_quests(
-	State.game_state.pl_exhausted == false, 
-		State.game_state.pl_completed_riddle == false
-	)
-
-	if State.quest_state == null:
+	# If the user doens't have a quest they're currently on,
+	# open the available quest-type panel
+	if QuestState.get_quest_type() == -1:
+		_quest_type_panel.set_available_quests(
+			GameState.state.pl_exhausted == false, 
+			GameState.state.pl_completed_riddle == false
+		)
 		_quest_type_panel.show()
+
+	# Otherwise, to battle!
 	else:
-		_loading_panel.visible = true
 		get_tree().change_scene_to_file("res://scenes/battle_scene/battle_scene.tscn")
 
 func on_battle_btn_pressed():
-	if State.quest_state == null:
-		_start_quest_request.request(
-			"%s/quest/create/%d" % [Config.URL_ROOT, Config.BATTLE_QUEST_IDX],
-			["Authorization: Bearer %s" % Auth.access_token, "Content-Type: application/json"],
-			HTTPClient.METHOD_POST,
-		)
-		_loading_panel.visible = true
+	QuestState.create_monster()
 
 func on_riddle_btn_pressed():
-	if State.quest_state == null:
-		_start_quest_request.request(
-			"%s/quest/create/%d" % [Config.URL_ROOT, Config.RIDDLE_QUEST_IDX],
-			["Authorization: Bearer %s" % Auth.access_token, "Content-Type: application/json"],
-			HTTPClient.METHOD_POST,
-		)
-		_loading_panel.visible = true
+	QuestState.create_riddle()
 
-# HTTP Response Handlers
-func _on_game_state_response(_result, _response_code, _headers, _body):
-	State.game_state = JSON.parse_string(_body.get_string_from_utf8())
-	print("Game State: %s" % State.game_state)
+func on_card_btn_pressed():
+	get_tree().change_scene_to_file("res://scenes/card_menu/card_menu.tscn")
 
-func _on_quest_state_response(_result, _response_code, _headers, _body):
-	if _response_code != 404:
-		State.quest_state = JSON.parse_string(_body.get_string_from_utf8())
-	print("Quest State: %s" % State.quest_state)
-	_loading_panel.visible = false
-
-func _on_start_quest_response(_result, _response_code, _headers, _body):
-	State.quest_state = JSON.parse_string(_body.get_string_from_utf8())
-	print("Quest Started! %s" % State.quest_state)
-	get_tree().change_scene_to_file("res://scenes/battle_scene/battle_scene.tscn")
+func on_logout_btn_pressed():
+	Auth.logout()
+	get_tree().change_scene_to_file("res://scenes/login_scene/login_scene.tscn")

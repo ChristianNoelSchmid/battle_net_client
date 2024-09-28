@@ -1,4 +1,4 @@
-extends Node2D
+extends Node 
 
 var ws: WebSocketPeer
 var attack_heading: Label
@@ -27,12 +27,12 @@ func _process(_delta):
 			elif "Victory" in json:
 				print("Victory!")
 				ws.close()
-				State.quest_state = null
+				QuestState.clear_current()
 				get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")
 			elif "Defeat" in json:
 				print("Defeat!")
 				ws.close()
-				State.quest_state = null
+				QuestState.clear_current()
 				get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")
 
 	var state = ws.get_ready_state()

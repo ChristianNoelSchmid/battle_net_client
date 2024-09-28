@@ -43,6 +43,11 @@ func try_login(username: String, password: String):
 		JSON.stringify(body)
 	)
 
+func logout():
+	access_token = ""
+	_refresh_token = ""
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(REFRESH_TOKEN_FILE_PATH))
+
 func _try_refresh():
 	# If the refresh token cache doesn't exist, return
 	if not FileAccess.file_exists(REFRESH_TOKEN_FILE_PATH):

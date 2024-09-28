@@ -69,3 +69,4 @@ text = "Login
 
 [connection signal="text_changed" from="UI/VBox/HBoxUsername/LineEditUsername" to="." method="on_input"]
 [connection signal="text_changed" from="UI/VBox/HBoxPassword/LineEditPassword" to="." method="on_input"]
+[connection signal="pressed" from="UI/VBox/ButtonLogin" to="." method="try_login"]

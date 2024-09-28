@@ -19,9 +19,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Config="*res://config.gd"
-State="*res://state.gd"
-Auth="*res://auth.gd"
+Config="*res://globals/config.gd"
+Auth="*res://globals/auth.gd"
+QuestState="*res://globals/quest_state.gd"
+GameState="*res://globals/game_state.gd"
 
 [dotnet]
 

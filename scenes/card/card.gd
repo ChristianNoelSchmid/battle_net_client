@@ -4,7 +4,7 @@ extends TextureRect
 @export var confirmed_texture: Texture2D
 
 var _title_label: Label
-var _desc_label: Label
+var _desc_label: RichTextLabel 
 var _image: TextureRect
 var _type_icon: TextureRect
 var _status_icon: TextureRect

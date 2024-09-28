@@ -23,7 +23,6 @@ var _considered_col_row: Array[int] = []
 var _guessed_col_rows = [-1, -1, -1]
 
 const COLUMN_CATS = ["players", "murder_weapons", "movies"]
-const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzIjoiMjAyNC0wOC0yMVQwMjoxMDo1NS44MDc1MDY1MDArMDA6MDAiLCJ1c2VyX2lkIjoiMSJ9.VjiIjU2DBp9tGR-w40fsEejz16oiU7Zg9xX-KYIJ31E"
 var _resources: Dictionary
 
 func _ready():
@@ -46,6 +45,7 @@ func _ready():
 	_guess_http_request.request_completed.connect(_on_guess_response)
 	add_child(_guess_http_request)
 
+	loading_toggled.emit()
 	import_cards()
 
 func _process(_delta):
@@ -81,7 +81,7 @@ func import_cards():
 func import_state():
 	loading_toggled.emit()
 	_state_http_request.request("%s/game/state" % Config.URL_ROOT,
-		["Authorization: Bearer %s" % ACCESS_TOKEN],
+		["Authorization: Bearer %s" % Auth.access_token],
 		HTTPClient.METHOD_GET
 	)
 func _on_state_response(_result, _response_code, _headers, body):
@@ -107,7 +107,7 @@ func card_triggered(col, row):
 		# Send an update HTTP request
 		print("Updating card %d, %d" % [col, row])
 		_confirm_http_request.request("%s/game/update-card" % Config.URL_ROOT,
-			["Authorization: Bearer %s" % ACCESS_TOKEN, "Content-Type: application/json"],
+			["Authorization: Bearer %s" % Auth.access_token, "Content-Type: application/json"],
 			HTTPClient.METHOD_POST,
 			JSON.stringify({ "cat_idx": col, "card_idx": row, "confirmed": _cards[col][row].get_status() == Config.CARD_CONSIDERED })
 		)
@@ -148,7 +148,7 @@ func _on_guess_pressed():
 				card.toggle_guessing_scheme()
 	else:
 		_guess_http_request.request("%s/game/guess" % Config.URL_ROOT,
-			["Authorization: Bearer %s" % ACCESS_TOKEN, "Content-Type: application/json"],
+			["Authorization: Bearer %s" % Auth.access_token, "Content-Type: application/json"],
 			HTTPClient.METHOD_POST,
 			JSON.stringify(_guessed_col_rows)
 		)
@@ -174,3 +174,6 @@ func _on_cancel_pressed():
 	for col in _cards:
 		for card in col:
 			card.toggle_guessing_scheme()
+
+func on_button_back_pressed():
+	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")
