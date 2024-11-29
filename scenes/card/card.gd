@@ -3,28 +3,15 @@ extends TextureRect
 @export var consider_texture: Texture2D
 @export var confirmed_texture: Texture2D
 
-var _title_label: Label
-var _desc_label: RichTextLabel 
-var _image: TextureRect
-var _type_icon: TextureRect
-var _status_icon: TextureRect
-var _confirm_panel: Control
-var _confirm_text: Label
+@onready var _status_icon: TextureRect = $StatusIcon
+@onready var _confirm_panel: Control = $ConfirmPanel
+@onready var _confirm_text: Label = $ConfirmPanel/ConfirmText
 
 signal triggered
 var _status: int = Config.CARD_CONSIDERED
 var _guessing: bool = false
 
 var _consider_confirm_visible: bool = false
-
-func _ready():
-	_title_label = get_node("Title")
-	_desc_label = get_node("Description")
-	_image = get_node("Image")
-	_type_icon = get_node("TypeIcon")
-	_status_icon = get_node("StatusIcon")
-	_confirm_panel = get_node("ConfirmPanel")
-	_confirm_text = get_node("ConfirmPanel/ConfirmText")
 
 func _process(_delta):
 	if _status != Config.CARD_CONFIRMED and Input.is_action_just_pressed('mouse-left'):
@@ -40,12 +27,8 @@ func _process(_delta):
 		_confirm_panel.visible = _consider_confirm_visible
 
 ### Getters/Setters ###
-func set_info(title: String, desc: String, img_tex: Texture2D, type_tex: Texture2D): 
-	_title_label.text = title
-	_desc_label.text = desc
-	_image.texture = img_tex
-	_type_icon.texture = type_tex
-
+func set_info(cat_idx, card_idx): 
+	texture = Resources.get_card_sprite(cat_idx, card_idx)
 
 ### Consider Scheme
 func confirm_card():
@@ -84,4 +67,3 @@ func _is_mouse_over():
 	mouse_over = mouse_over and mouse_pos.y > _confirm_panel.global_position.y and mouse_pos.y < (_confirm_panel.global_position.y + _confirm_panel.get_global_rect().size.y)
 
 	return mouse_over
-

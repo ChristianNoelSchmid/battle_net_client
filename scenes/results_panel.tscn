@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://cn0dyq4rl3p6d"]
+
+[ext_resource type="Script" path="res://scenes/battle_scene/results_panel.gd" id="1_dvo35"]
+[ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="1_oer1d"]
+[ext_resource type="Texture2D" uid="uid://chbwwgfqg07ri" path="res://assets/blank.png" id="2_ou8rt"]
+[ext_resource type="Texture2D" uid="uid://b63ggg75ix6s2" path="res://assets/cards/alyssa c.png" id="2_wfabq"]
+
+[sub_resource type="Theme" id="Theme_i3jfp"]
+default_font = ExtResource("1_oer1d")
+
+[sub_resource type="Theme" id="Theme_vb084"]
+default_font_size = 72
+
+[sub_resource type="Theme" id="Theme_54b2l"]
+
+[node name="Results Panel" type="TextureRect"]
+self_modulate = Color(0, 0, 0, 0.72549)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_i3jfp")
+texture = ExtResource("2_ou8rt")
+script = ExtResource("1_dvo35")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ResultsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_vb084")
+text = "victory!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="UnlockPanel" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="UnlockLabel" type="Label" parent="VBoxContainer/UnlockPanel"]
+layout_mode = 2
+theme = SubResource("Theme_vb084")
+text = "Unlocked card:"
+vertical_alignment = 1
+uppercase = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/UnlockPanel"]
+layout_mode = 2
+texture = ExtResource("2_wfabq")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_54b2l")
+theme_override_font_sizes/font_size = 52
+text = "Return to Home"

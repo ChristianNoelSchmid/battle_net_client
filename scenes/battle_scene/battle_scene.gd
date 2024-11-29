@@ -17,8 +17,8 @@ func _ready():
 	if err != OK:
 		print(err)
 
-	player_sprite.texture = BattleResources.get_player_sprite(GameState.state.user_id)
-	enemy_sprite.texture = BattleResources.get_enemy_sprite(QuestState.state.monster_state.res_idx)
+	player_sprite.texture = Resources.get_player_sprite(GameState.state.user_id)
+	enemy_sprite.texture = Resources.get_enemy_sprite(QuestState.state.monster_state.res_idx)
 
 	var profile = Profiles.get_profile(GameState.state.user_id)
 	power_bar.set_attack_text(profile.attacks)
@@ -47,7 +47,7 @@ func _process(_delta):
 			elif res.victory:
 				ws.close()
 				QuestState.clear_current()
-				results_panel.show_victory()
+				results_panel.show_victory([res.victory.reward.card.cat_idx, res.victory.reward.card.card_idx])
 
 			elif res.defeat:
 				ws.close()

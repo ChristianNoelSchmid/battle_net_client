@@ -1,9 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://blrard2w0yr2e"]
+[gd_scene load_steps=10 format=3 uid="uid://blrard2w0yr2e"]
 
 [ext_resource type="Script" path="res://scenes/riddle_scene/riddle_scene.gd" id="1_abasa"]
 [ext_resource type="Texture2D" uid="uid://vmiw8wpsmmky" path="res://assets/cobblestone.png" id="1_vudcr"]
 [ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="2_57tmk"]
-[ext_resource type="Script" path="res://scenes/battle_scene/results_panel.gd" id="4_eri34"]
+[ext_resource type="PackedScene" uid="uid://cn0dyq4rl3p6d" path="res://scenes/results_panel.tscn" id="4_i3n8a"]
 
 [sub_resource type="Theme" id="Theme_0u4ni"]
 default_font = ExtResource("2_57tmk")
@@ -19,14 +19,8 @@ default_font_size = 48
 default_font = ExtResource("2_57tmk")
 default_font_size = 32
 
-[sub_resource type="Theme" id="Theme_dv7uf"]
+[sub_resource type="Theme" id="Theme_vpogw"]
 default_font = ExtResource("2_57tmk")
-
-[sub_resource type="Theme" id="Theme_u3ucf"]
-default_font_size = 72
-
-[sub_resource type="Theme" id="Theme_71pc0"]
-default_font_size = 32
 
 [node name="RiddleScene" type="Node"]
 script = ExtResource("1_abasa")
@@ -114,57 +108,9 @@ offset_bottom = -2.0
 theme = SubResource("Theme_d55rn")
 text = "Back"
 
-[node name="Results Panel" type="Panel" parent="."]
+[node name="Results Panel" parent="." instance=ExtResource("4_i3n8a")]
 visible = false
-self_modulate = Color(0, 0, 0, 1)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_dv7uf")
-script = ExtResource("4_eri34")
-
-[node name="Results Label" type="Label" parent="Results Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.3
-anchor_right = 1.0
-anchor_bottom = 0.4
-theme = SubResource("Theme_u3ucf")
-text = "correct!"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="Button" type="Button" parent="Results Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.8
-anchor_right = 0.9
-anchor_bottom = 0.9
-theme = SubResource("Theme_71pc0")
-text = "Return to Home"
-
-[node name="Unlock Panel" type="Control" parent="Results Panel"]
-layout_mode = 1
-anchor_top = 0.4
-anchor_right = 1.0
-anchor_bottom = 0.8
-
-[node name="Unlock Label" type="Label" parent="Results Panel/Unlock Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.1
-anchor_right = 0.5
-anchor_bottom = 0.9
-offset_left = 32.0
-theme = SubResource("Theme_u3ucf")
-text = "Unlocked card:"
-vertical_alignment = 1
-uppercase = true
+theme = SubResource("Theme_vpogw")
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button" to="." method="_on_submit"]
 [connection signal="pressed" from="Panel/Control/ButtonBack" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Results Panel/Button" to="." method="_on_goto_home"]

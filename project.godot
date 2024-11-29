@@ -23,7 +23,7 @@ Config="*res://globals/config.gd"
 Auth="*res://globals/auth.gd"
 QuestState="*res://globals/quest_state.gd"
 GameState="*res://globals/game_state.gd"
-BattleResources="*res://globals/battle_resources.gd"
+Resources="*res://globals/resources.gd"
 Profiles="*res://globals/profiles.gd"
 
 [dotnet]
@@ -50,5 +50,6 @@ submit={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

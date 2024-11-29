@@ -31,7 +31,7 @@ func _on_guess_response(_result, _response_code, _headers, body):
 	if status.incorrect:
 		pass
 	else:
-		results_panel.show_victory()
+		results_panel.show_victory([status.correct.card.cat_idx, status.correct.card.card_idx])
 		QuestState.clear_current()
 
 func _on_goto_home():	

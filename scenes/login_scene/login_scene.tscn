@@ -9,6 +9,7 @@ default_font_size = 32
 
 [node name="LoginScene" type="Node2D"]
 script = ExtResource("1_6k5id")
+metadata/_edit_vertical_guides_ = [30.0]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b38vyfmsmkp6a"]
+[gd_scene load_steps=14 format=3 uid="uid://b38vyfmsmkp6a"]
 
 [ext_resource type="Script" path="res://scenes/battle_scene/battle_scene.gd" id="1_20jma"]
 [ext_resource type="Texture2D" uid="uid://vmiw8wpsmmky" path="res://assets/cobblestone.png" id="1_gq0ns"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://scenes/battle_scene/sub_health.gd" id="7_1npnq"]
 [ext_resource type="Script" path="res://scenes/battle_scene/attack_bar.gd" id="7_31naa"]
 [ext_resource type="Script" path="res://scenes/battle_scene/hp_panel.gd" id="8_3if3i"]
-[ext_resource type="Script" path="res://scenes/battle_scene/results_panel.gd" id="10_o5tfc"]
+[ext_resource type="PackedScene" uid="uid://cn0dyq4rl3p6d" path="res://scenes/results_panel.tscn" id="10_pwkv8"]
 
 [sub_resource type="Theme" id="Theme_irt5s"]
 default_font = ExtResource("5_vcb2u")
@@ -25,9 +25,6 @@ shadow_offset = Vector2(3, 3)
 
 [sub_resource type="Theme" id="Theme_05lrd"]
 default_font = ExtResource("5_vcb2u")
-
-[sub_resource type="Theme" id="Theme_vb084"]
-default_font_size = 72
 
 [node name="BattleScene" type="Node"]
 script = ExtResource("1_20jma")
@@ -238,57 +235,11 @@ seconds_to_fade = 2.0
 flutter_speed = 10
 flutter_dist = 3
 
-[node name="Results Panel" type="Panel" parent="UI"]
+[node name="Results Panel" parent="UI" instance=ExtResource("10_pwkv8")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("10_o5tfc")
-
-[node name="Results Label" type="Label" parent="UI/Results Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.3
-anchor_right = 1.0
-anchor_bottom = 0.4
-theme = SubResource("Theme_vb084")
-text = "victory!"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="Button" type="Button" parent="UI/Results Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.8
-anchor_right = 0.9
-anchor_bottom = 0.9
-text = "Return to Home"
-
-[node name="Unlock Panel" type="Control" parent="UI/Results Panel"]
-layout_mode = 1
-anchor_top = 0.4
-anchor_right = 1.0
-anchor_bottom = 0.8
-
-[node name="Unlock Label" type="Label" parent="UI/Results Panel/Unlock Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.1
-anchor_right = 0.5
-anchor_bottom = 0.9
-offset_left = 32.0
-theme = SubResource("Theme_vb084")
-text = "Unlocked card:"
-vertical_alignment = 1
-uppercase = true
 
 [connection signal="pressed" from="UI/Control/Attack/Attack1" to="." method="on_send_message" binds= ["Attack::1"]]
 [connection signal="pressed" from="UI/Control/Attack/Attack2" to="." method="on_send_message" binds= ["Attack::2"]]
 [connection signal="pressed" from="UI/Control/Attack/Attack3" to="." method="on_send_message" binds= ["Attack::3"]]
 [connection signal="pressed" from="UI/Control/Attack/Attack4" to="." method="on_send_message" binds= ["Attack::4"]]
 [connection signal="pressed" from="UI/Control/Defend" to="." method="on_send_message" binds= ["Defend"]]
-[connection signal="pressed" from="UI/Results Panel/Button" to="." method="_on_results_button_pressed"]

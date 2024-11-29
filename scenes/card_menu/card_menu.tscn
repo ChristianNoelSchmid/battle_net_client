@@ -70,7 +70,7 @@ alignment = 1
 [node name="Column1" type="VBoxContainer" parent="ScrollContainer/Row"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = -48
+theme_override_constants/separation = 32
 
 [node name="Card" parent="ScrollContainer/Row/Column1" instance=ExtResource("2_j6v4e")]
 visible = false
@@ -79,7 +79,7 @@ layout_mode = 2
 [node name="Column2" type="VBoxContainer" parent="ScrollContainer/Row"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = -48
+theme_override_constants/separation = 32
 
 [node name="Card2" parent="ScrollContainer/Row/Column2" instance=ExtResource("2_j6v4e")]
 visible = false
@@ -88,7 +88,7 @@ layout_mode = 2
 [node name="Column3" type="VBoxContainer" parent="ScrollContainer/Row"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = -48
+theme_override_constants/separation = 32
 
 [node name="Card2" parent="ScrollContainer/Row/Column3" instance=ExtResource("2_j6v4e")]
 visible = false
