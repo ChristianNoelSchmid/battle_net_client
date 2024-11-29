@@ -17,7 +17,7 @@ func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")
 
 func _on_submit():
-	var route = "%s/quest/guess-riddle/%s" % [Config.URL_ROOT, entry.text]
+	var route = ("%s/quest/guess-riddle/%s" % [Config.URL_ROOT, entry.text.uri_encode()])
 	_guess_http_request.request(route,
 		["Authorization: Bearer %s" % Auth.access_token],
 		HTTPClient.METHOD_POST
