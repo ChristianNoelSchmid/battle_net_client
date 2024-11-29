@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dqpr1l33pgc1f"]
+[gd_scene load_steps=14 format=3 uid="uid://dqpr1l33pgc1f"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_aslvy"]
 [ext_resource type="Texture2D" uid="uid://buhx5gf0loyc5" path="res://assets/door.png" id="2_h1khn"]
@@ -9,6 +9,9 @@
 [ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="5_tbwi2"]
 [ext_resource type="Script" path="res://scenes/main_menu/nav_menu.gd" id="6_feywt"]
 [ext_resource type="PackedScene" uid="uid://bw27ywob164qw" path="res://scenes/loading_panel/loading_panel.tscn" id="7_cq8we"]
+
+[sub_resource type="Theme" id="Theme_8kld2"]
+default_font = ExtResource("5_tbwi2")
 
 [sub_resource type="LabelSettings" id="LabelSettings_kman7"]
 font_size = 38
@@ -32,6 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = SubResource("Theme_8kld2")
 texture = ExtResource("2_h1khn")
 expand_mode = 3
 stretch_mode = 6

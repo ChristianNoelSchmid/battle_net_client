@@ -27,16 +27,18 @@ func _process(_delta):
 func on_quest_btn_pressed():
 	# If the user doens't have a quest they're currently on,
 	# open the available quest-type panel
-	if QuestState.get_quest_type() == -1:
+	if !QuestState.state || QuestState.state.quest_type == -1:
 		_quest_type_panel.set_available_quests(
 			GameState.state.pl_exhausted == false, 
-			GameState.state.pl_completed_riddle == false
+			GameState.state.pl_completed_daily_riddle == false && GameState.state.pl_completed_all_riddles == false
 		)
 		_quest_type_panel.show()
 
 	# Otherwise, to battle!
-	else:
+	elif QuestState.state.quest_type == Config.BATTLE_QUEST_IDX:
 		get_tree().change_scene_to_file("res://scenes/battle_scene/battle_scene.tscn")
+	elif QuestState.state.quest_type == Config.RIDDLE_QUEST_IDX:
+		get_tree().change_scene_to_file("res://scenes/riddle_scene/riddle_scene.tscn")
 
 func on_battle_btn_pressed():
 	QuestState.create_monster()
