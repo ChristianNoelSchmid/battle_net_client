@@ -39,8 +39,8 @@ var _player_sprites = [
 ]
 
 var _enemy_sprites = [
-	"Possessed Nutcraker",
-	"Wildred the Esteemed Wizard",
+	"Possessed Nutcracker",
+	"Wilfred the Esteemed Wizard",
 ]
 
 func get_player_sprite(id):
@@ -48,7 +48,7 @@ func get_player_sprite(id):
 	return load("res://assets/players/%s.png" % _player_sprites[id - 1])
 
 func get_enemy_sprite(idx):
-	return load("res://assets/battle/enemy_sprites/%s.png" % _enemy_sprites[idx])
+	return load("res://assets/enemies/%s.png" % _enemy_sprites[idx - 1])
 
 func get_card_sprite(cat_idx, card_idx) -> Texture:
 	for i in len(_cards):

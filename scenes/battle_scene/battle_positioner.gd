@@ -15,4 +15,4 @@ func _on_viewport_size_changed():
 	if player:
 		parent.global_position.x = rect.size.x / 4
 	else:
-		parent.global_position.x = rect.size - (rect.size.x / 4)
+		parent.global_position.x = rect.size.x - (rect.size.x / 4)

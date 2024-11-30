@@ -91,8 +91,6 @@ anchor_left = 0.025
 anchor_top = 0.025
 anchor_right = 0.125
 anchor_bottom = 0.125
-offset_left = 1.0
-offset_top = 2.0
 offset_right = -0.496002
 offset_bottom = -0.0320015
 
@@ -108,9 +106,10 @@ offset_bottom = -2.0
 theme = SubResource("Theme_d55rn")
 text = "Back"
 
-[node name="Results Panel" parent="." instance=ExtResource("4_i3n8a")]
+[node name="ResultsPanel" parent="." instance=ExtResource("4_i3n8a")]
 visible = false
 theme = SubResource("Theme_vpogw")
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button" to="." method="_on_submit"]
 [connection signal="pressed" from="Panel/Control/ButtonBack" to="." method="_on_back_pressed"]
+[connection signal="on_submit" from="ResultsPanel" to="." method="goto_home"]

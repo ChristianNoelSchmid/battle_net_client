@@ -1,7 +1,7 @@
 extends Node
 
 @onready var riddle_label = $Panel/VBoxContainer/RiddleLabel
-@onready var results_panel = $"Results Panel"
+@onready var results_panel = $ResultsPanel
 @onready var entry = $Panel/VBoxContainer/HBoxContainer/LineEdit
 
 var _guess_http_request: HTTPRequest
@@ -31,8 +31,8 @@ func _on_guess_response(_result, _response_code, _headers, body):
 	if status.incorrect:
 		pass
 	else:
-		results_panel.show_victory([status.correct.card.cat_idx, status.correct.card.card_idx])
+		results_panel.show_victory(status.correct.card)
 		QuestState.clear_current()
 
-func _on_goto_home():	
+func goto_home():	
 	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")

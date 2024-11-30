@@ -50,5 +50,6 @@ func on_card_btn_pressed():
 	get_tree().change_scene_to_file("res://scenes/card_menu/card_menu.tscn")
 
 func on_logout_btn_pressed():
+	QuestState.clear_current()
 	Auth.logout()
 	get_tree().change_scene_to_file("res://scenes/login_scene/login_scene.tscn")

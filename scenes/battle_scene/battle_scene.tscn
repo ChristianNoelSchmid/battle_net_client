@@ -1,15 +1,94 @@
-[gd_scene load_steps=14 format=3 uid="uid://b38vyfmsmkp6a"]
+[gd_scene load_steps=32 format=3 uid="uid://b38vyfmsmkp6a"]
 
 [ext_resource type="Script" path="res://scenes/battle_scene/battle_scene.gd" id="1_20jma"]
 [ext_resource type="Texture2D" uid="uid://vmiw8wpsmmky" path="res://assets/cobblestone.png" id="1_gq0ns"]
 [ext_resource type="Texture2D" uid="uid://bwhmman2oflxi" path="res://assets/players/Chris.png" id="3_787ld"]
 [ext_resource type="Script" path="res://scenes/battle_scene/battle_positioner.gd" id="4_514xq"]
 [ext_resource type="Texture2D" uid="uid://dy71464adboss" path="res://assets/murder_weapons/murder_weapon_fruit_cake.png" id="4_kolho"]
+[ext_resource type="AnimationLibrary" uid="uid://bkc7nwbpn8vgm" path="res://assets/player.res" id="5_2vtbh"]
+[ext_resource type="Script" path="res://scenes/battle_scene/animator.gd" id="5_sby6p"]
 [ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="5_vcb2u"]
 [ext_resource type="Script" path="res://scenes/battle_scene/sub_health.gd" id="7_1npnq"]
+[ext_resource type="AnimationLibrary" uid="uid://dxhl6kkfl3vi" path="res://assets/enemy.res" id="7_1u70o"]
 [ext_resource type="Script" path="res://scenes/battle_scene/attack_bar.gd" id="7_31naa"]
 [ext_resource type="Script" path="res://scenes/battle_scene/hp_panel.gd" id="8_3if3i"]
+[ext_resource type="Texture2D" uid="uid://cp5srpjksg8dv" path="res://assets/attack_1.png" id="8_ctpr3"]
+[ext_resource type="Texture2D" uid="uid://dkqs5yxjfa37a" path="res://assets/attack_2.png" id="9_adcog"]
+[ext_resource type="Texture2D" uid="uid://c71lwt8sup2ds" path="res://assets/attack_3.png" id="10_fa3g6"]
 [ext_resource type="PackedScene" uid="uid://cn0dyq4rl3p6d" path="res://scenes/results_panel.tscn" id="10_pwkv8"]
+[ext_resource type="Texture2D" uid="uid://bctis5eue4bah" path="res://assets/attack_4.png" id="11_j2mt3"]
+[ext_resource type="Texture2D" uid="uid://c1n5v35krwou3" path="res://assets/defend.png" id="15_8vh65"]
+[ext_resource type="AudioStream" uid="uid://dd0h4v6274nh2" path="res://assets/Christmas 2022 - Battle.mp3" id="15_4688m"]
+[ext_resource type="Script" path="res://scenes/battle_scene/attack_cover.gd" id="16_bocqf"]
+[ext_resource type="Script" path="res://scenes/battle_scene/music_player.gd" id="16_jq5ni"]
+
+[sub_resource type="Animation" id="Animation_7ocdj"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_hpqfn"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oiue2"]
+_data = {
+"RESET": SubResource("Animation_7ocdj"),
+"idle": SubResource("Animation_hpqfn")
+}
+
+[sub_resource type="Animation" id="Animation_dxgux"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uk7s7"]
+_data = {
+"idle": SubResource("Animation_dxgux")
+}
 
 [sub_resource type="Theme" id="Theme_irt5s"]
 default_font = ExtResource("5_vcb2u")
@@ -23,8 +102,15 @@ shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.615686)
 shadow_offset = Vector2(3, 3)
 
+[sub_resource type="Theme" id="Theme_up4gy"]
+default_font_size = 64
+
 [sub_resource type="Theme" id="Theme_05lrd"]
 default_font = ExtResource("5_vcb2u")
+
+[sub_resource type="Theme" id="Theme_8ksgx"]
+default_font = ExtResource("5_vcb2u")
+default_font_size = 32
 
 [node name="BattleScene" type="Node"]
 script = ExtResource("1_20jma")
@@ -44,21 +130,49 @@ scale = Vector2(6, 6)
 texture = ExtResource("1_gq0ns")
 stretch_mode = 1
 
-[node name="PlayerSprite" type="Sprite2D" parent="."]
-position = Vector2(223, 250)
-scale = Vector2(5.68551, 5.68551)
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(224, 242)
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+scale = Vector2(7, 7)
 texture = ExtResource("3_787ld")
 
-[node name="BattlePositioner" type="Node" parent="PlayerSprite"]
+[node name="BattlePositioner" type="Node" parent="Player"]
 script = ExtResource("4_514xq")
 
-[node name="EnemySprite" type="Sprite2D" parent="."]
-position = Vector2(876, 257)
-scale = Vector2(6.58098, 6.58098)
+[node name="Animator" type="Node" parent="Player"]
+script = ExtResource("5_sby6p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+root_node = NodePath("../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_oiue2"),
+"player": ExtResource("5_2vtbh")
+}
+autoplay = "idle"
+
+[node name="Enemy" type="Node2D" parent="."]
+position = Vector2(770, 236)
+
+[node name="Sprite" type="Sprite2D" parent="Enemy"]
+position = Vector2(-20, 0)
+scale = Vector2(7, 7)
 texture = ExtResource("4_kolho")
 
-[node name="BattlePositioner" type="Node" parent="EnemySprite"]
+[node name="BattlePositioner" type="Node" parent="Enemy"]
 script = ExtResource("4_514xq")
+player = false
+
+[node name="Animator" type="Node" parent="Enemy"]
+script = ExtResource("5_sby6p")
+animation_group = "enemy"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy"]
+root_node = NodePath("../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_uk7s7"),
+"enemy": ExtResource("7_1u70o")
+}
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -69,6 +183,7 @@ offset_right = -3.0
 offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1, 0.99661)
 theme = SubResource("Theme_irt5s")
 
 [node name="Panel" type="Panel" parent="UI"]
@@ -104,36 +219,139 @@ anchor_bottom = 1.0
 script = ExtResource("7_31naa")
 
 [node name="Attack1" type="Button" parent="UI/Control/Attack"]
+modulate = Color(0, 0.784314, 0.270588, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.25
 anchor_bottom = 1.0
+size_flags_horizontal = 3
+disabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/Attack/Attack1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Control/Attack/Attack1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 2.0
 text = "Pithy Jibe"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("8_ctpr3")
+stretch_mode = 5
 
 [node name="Attack2" type="Button" parent="UI/Control/Attack"]
+modulate = Color(0, 0.784314, 0.270588, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
 anchor_right = 0.5
 anchor_bottom = 1.0
-text = "Guitar Riff"
+size_flags_horizontal = 3
+disabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/Attack/Attack2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Control/Attack/Attack2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 2.0
+text = "Pithy Jibe"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("9_adcog")
+stretch_mode = 5
 
 [node name="Attack3" type="Button" parent="UI/Control/Attack"]
+modulate = Color(0, 0.784314, 0.270588, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.75
 anchor_bottom = 1.0
-text = "Mighty Leap"
+size_flags_horizontal = 3
+disabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/Attack/Attack3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Control/Attack/Attack3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 2.0
+text = "Pithy Jibe"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("10_fa3g6")
+stretch_mode = 5
 
 [node name="Attack4" type="Button" parent="UI/Control/Attack"]
+modulate = Color(0, 0.784314, 0.270588, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
-text = "THE KING
-IS HERE"
+size_flags_horizontal = 3
+disabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/Attack/Attack4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Control/Attack/Attack4/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 2.0
+text = "Pithy Jibe"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack4/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("11_j2mt3")
+stretch_mode = 5
 
 [node name="Defend" type="Button" parent="UI/Control"]
 layout_mode = 1
@@ -141,13 +359,71 @@ anchors_preset = -1
 anchor_left = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/Defend"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Control/Defend/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 2.0
 text = "Defend"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control/Defend/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("15_8vh65")
+stretch_mode = 5
+
+[node name="ActionCover" type="Panel" parent="UI/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_bocqf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/ActionCover"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Control/ActionCover/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_up4gy")
+text = "DEFENDING"
+horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control/ActionCover/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_ctpr3")
+stretch_mode = 4
 
 [node name="Player HP" type="Control" parent="UI"]
 layout_mode = 1
-anchor_left = 0.05
+anchor_left = 0.1
 anchor_top = 0.7
-anchor_right = 0.3
+anchor_right = 0.4
 anchor_bottom = 0.8
 script = ExtResource("8_3if3i")
 
@@ -191,9 +467,9 @@ flutter_dist = 3
 
 [node name="Monster HP" type="Control" parent="UI"]
 layout_mode = 1
-anchor_left = 0.7
+anchor_left = 0.6
 anchor_top = 0.7
-anchor_right = 0.95
+anchor_right = 0.9
 anchor_bottom = 0.8
 script = ExtResource("8_3if3i")
 
@@ -235,11 +511,41 @@ seconds_to_fade = 2.0
 flutter_speed = 10
 flutter_dist = 3
 
-[node name="Results Panel" parent="UI" instance=ExtResource("10_pwkv8")]
+[node name="ResultsPanel" parent="UI" instance=ExtResource("10_pwkv8")]
+visible = false
 layout_mode = 1
 
-[connection signal="pressed" from="UI/Control/Attack/Attack1" to="." method="on_send_message" binds= ["Attack::1"]]
-[connection signal="pressed" from="UI/Control/Attack/Attack2" to="." method="on_send_message" binds= ["Attack::2"]]
-[connection signal="pressed" from="UI/Control/Attack/Attack3" to="." method="on_send_message" binds= ["Attack::3"]]
-[connection signal="pressed" from="UI/Control/Attack/Attack4" to="." method="on_send_message" binds= ["Attack::4"]]
-[connection signal="pressed" from="UI/Control/Defend" to="." method="on_send_message" binds= ["Defend"]]
+[node name="ButtonBack" type="Button" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.125
+anchor_bottom = 0.125
+offset_left = -1.33333
+offset_top = -1.5
+offset_right = -1.50834
+offset_bottom = -2.0
+theme = SubResource("Theme_8ksgx")
+text = "Back"
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_4688m")
+autoplay = true
+script = ExtResource("16_jq5ni")
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = -2.5
+pitch_scale = 4.0
+autoplay = true
+
+[node name="Animator" type="Node" parent="."]
+script = ExtResource("5_sby6p")
+
+[connection signal="pressed" from="UI/Control/Attack/Attack1" to="." method="attack" binds= [1]]
+[connection signal="pressed" from="UI/Control/Attack/Attack2" to="." method="attack" binds= [2]]
+[connection signal="pressed" from="UI/Control/Attack/Attack3" to="." method="attack" binds= [3]]
+[connection signal="pressed" from="UI/Control/Attack/Attack4" to="." method="attack" binds= [4]]
+[connection signal="pressed" from="UI/Control/Defend" to="." method="defend"]
+[connection signal="on_submit" from="UI/ResultsPanel" to="." method="goto_home"]
+[connection signal="pressed" from="UI/ButtonBack" to="." method="goto_home"]

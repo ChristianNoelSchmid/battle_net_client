@@ -18,3 +18,6 @@ func set_health(health):
 
 	recvd_first_msg = true
 	current_health = health
+	
+func subtract_health(health):
+	set_health(current_health - health)
