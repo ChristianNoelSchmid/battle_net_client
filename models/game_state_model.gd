@@ -10,6 +10,8 @@ var winner_idxs: Array
 var pl_exhausted: bool
 var pl_completed_daily_riddle: bool
 var pl_completed_all_riddles: bool
+var pl_guessed_today: bool
+var first_login: bool
 
 func parse_variant(variant):
 	user_id = variant.user_id
@@ -30,3 +32,8 @@ func parse_variant(variant):
 	pl_exhausted = variant.pl_exhausted
 	pl_completed_daily_riddle = variant.pl_completed_daily_riddle
 	pl_completed_all_riddles = variant.pl_completed_all_riddles
+	pl_guessed_today = variant.pl_guessed_today
+	first_login = variant.first_login
+
+func player_won():
+	return len(target_cards) > 0

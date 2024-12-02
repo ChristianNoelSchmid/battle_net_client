@@ -82,8 +82,9 @@ offset_bottom = -0.999969
 [node name="VBoxContainer" type="VBoxContainer" parent="Background/QuestTypePanel/MainPanel"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.05
 anchor_top = 0.05
-anchor_right = 1.0
+anchor_right = 0.95
 anchor_bottom = 0.95
 grow_horizontal = 2
 grow_vertical = 2
@@ -104,14 +105,14 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="ButtonBattle" type="Button" parent="Background/QuestTypePanel/MainPanel/VBoxContainer/VBoxButtons"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-size_flags_vertical = 3
 theme = SubResource("Theme_coovd")
 text = "BATTLE"
 
 [node name="ButtonRiddle" type="Button" parent="Background/QuestTypePanel/MainPanel/VBoxContainer/VBoxButtons"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-size_flags_vertical = 3
 theme = SubResource("Theme_coovd")
 text = "RIDDLE"
 

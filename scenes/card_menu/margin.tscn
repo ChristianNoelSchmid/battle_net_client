@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ebg2eb5d4ec7"]
+
+[ext_resource type="Texture2D" uid="uid://chbwwgfqg07ri" path="res://assets/blank.png" id="1_61bxf"]
+
+[node name="Blank" type="TextureRect"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(128, 128)
+texture = ExtResource("1_61bxf")
+expand_mode = 1

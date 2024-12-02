@@ -9,10 +9,15 @@ func is_loading(): return _loading
 func initialize():
 	_game_state_http_request = HTTPRequest.new()
 	_game_state_http_request.request_completed.connect(_on_game_state_response)
-	add_child(_game_state_http_request)
-	
+	if _game_state_http_request.get_parent() != self:
+		add_child(_game_state_http_request)
+		
+	state = null
 	_get_game_state()
 	_loading = true
+
+func is_initialized():
+	return state != null
 
 func _get_game_state():
 	_game_state_http_request.request(

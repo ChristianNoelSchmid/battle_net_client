@@ -7,20 +7,22 @@
 default_font = ExtResource("1_qsdcp")
 default_font_size = 32
 
-[node name="LoginScene" type="Node2D"]
+[node name="LoginScene" type="Node"]
 script = ExtResource("1_6k5id")
 metadata/_edit_vertical_guides_ = [30.0]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1147.0
-offset_bottom = 642.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_7pthk")
 
 [node name="VBox" type="VBoxContainer" parent="UI"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2

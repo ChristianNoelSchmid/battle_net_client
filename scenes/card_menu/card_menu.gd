@@ -5,8 +5,13 @@ extends Node
 
 signal loading_toggled
 
-@onready var _guess_button: Button = $GuessPanel/Buttons/GuessButton
-@onready var _cancel_button: Button = $GuessPanel/Buttons/CancelButton
+@onready var _msg_panel = $GuessPanel
+@onready var _button_panel = $GuessPanel/VBoxContainer/Buttons
+@onready var _already_guessed_label = $GuessPanel/VBoxContainer/AlreadyGuessedLabel
+@onready var _guess_button: Button = $GuessPanel/VBoxContainer/Buttons/GuessButton
+@onready var _cancel_button: Button = $GuessPanel/VBoxContainer/Buttons/CancelButton
+@onready var _win_display = $WinDisplay
+@onready var _incorrect_display = $IncorrectDisplay
 
 var _cards = []
 var _state_loaded = false
@@ -38,6 +43,13 @@ func _ready():
 
 	loading_toggled.emit()
 	import_cards()
+	
+	if GameState.state.pl_guessed_today:
+		_button_panel.hide()
+		_already_guessed_label.show()
+		
+	if GameState.state.player_won():
+		_msg_panel.hide()
 
 func _process(_delta):
 	if not _state_loaded:
@@ -62,6 +74,9 @@ func import_cards():
 				
 				new_card.triggered.connect(card_triggered.bind(idxs[0], idxs[1]))
 				_cards[idxs[0]].push_back(new_card)
+	
+	var margin = load("res://scenes/card_menu/margin.tscn").instantiate()
+	columns[0].add_child(margin)
 
 # Imports the current game state from the server
 func import_state():
@@ -70,9 +85,16 @@ func import_state():
 		["Authorization: Bearer %s" % Auth.access_token],
 		HTTPClient.METHOD_GET
 	)
+	
 func _on_state_response(_result, _response_code, _headers, body):
 	# Parse the JSON contents and get the 'user_cards' state
 	var json = JSON.parse_string(body.get_string_from_utf8())
+	if GameState.state.player_won():
+		for i in len(_cards):
+			for j in len(_cards[i]):
+				_cards[i][j].confirm_card()
+		for idxs in GameState.state.target_cards:
+			_cards[idxs.cat_idx][idxs.card_idx].win_card()
 	for card_values in json['user_cards']:
 		# Get the card being referenced
 		var card = 	_cards[card_values['cat_idx']][card_values['card_idx']]
@@ -145,10 +167,20 @@ func _on_guess_pressed():
 				card.toggle_guessing_scheme()
 
 func _on_guess_response(_result, _response_code, _headers, body):
-	if body.get_string_from_utf8() == "true":
-		print("Success!")
+	var res = load("res://models/guess_result_model.gd").new()
+	var contents = body.get_string_from_utf8()
+	var json = JSON.parse_string(contents)
+	print(contents)
+	print(json)
+	res.parse_variant(json)
+	
+	if res.incorrect:
+		_incorrect_display.show()
 	else:
-		print("Failure!")
+		var tex1 = _cards[0][res.correct[0]].texture
+		var tex2 = _cards[1][res.correct[1]].texture
+		var tex3 = _cards[2][res.correct[2]].texture
+		_win_display.display(tex1, tex2, tex3)
 
 func _on_cancel_pressed():
 	_guess_button.disabled = false

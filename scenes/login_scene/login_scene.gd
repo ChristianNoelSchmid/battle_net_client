@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 @onready var input_username: LineEdit = $UI/VBox/HBoxUsername/LineEditUsername
 @onready var input_password: LineEdit = $UI/VBox/HBoxPassword/LineEditPassword

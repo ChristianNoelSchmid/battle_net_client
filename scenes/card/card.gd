@@ -2,6 +2,7 @@ extends TextureRect
 
 @export var consider_texture: Texture2D
 @export var confirmed_texture: Texture2D
+@export var win_texture: Texture2D
 
 @onready var _status_icon: TextureRect = $StatusIcon
 @onready var _confirm_panel: Control = $ConfirmPanel
@@ -10,12 +11,13 @@ extends TextureRect
 signal triggered
 var _status: int = Config.CARD_CONSIDERED
 var _guessing: bool = false
+var _mouse_over = false
 
 var _consider_confirm_visible: bool = false
 
 func _process(_delta):
 	if _status != Config.CARD_CONFIRMED and Input.is_action_just_pressed('mouse-left'):
-		if _is_mouse_over():
+		if _mouse_over:
 			if _guessing: triggered.emit()
 			elif _consider_confirm_visible: 
 				triggered.emit()
@@ -24,7 +26,7 @@ func _process(_delta):
 		else:
 			_consider_confirm_visible = false
 
-		_confirm_panel.visible = _consider_confirm_visible
+		_confirm_panel.visible = _consider_confirm_visible && !_guessing
 
 ### Getters/Setters ###
 func set_info(cat_idx, card_idx): 
@@ -33,6 +35,10 @@ func set_info(cat_idx, card_idx):
 ### Consider Scheme
 func confirm_card():
 	_status_icon.texture = confirmed_texture
+	_status = Config.CARD_CONFIRMED
+	
+func win_card():
+	_status_icon.texture = win_texture
 	_status = Config.CARD_CONFIRMED
 
 func toggle_consider_status():
@@ -61,9 +67,15 @@ func set_is_being_guessed(being_guessed: bool):
 	if being_guessed: modulate = Color.WHITE
 	else: modulate = Color.hex(0x999999)
 
-func _is_mouse_over(): 
-	var mouse_pos = get_global_mouse_position()
-	var mouse_over = mouse_pos.x > _confirm_panel.global_position.x and mouse_pos.x < (_confirm_panel.global_position.x + _confirm_panel.get_global_rect().size.x)
-	mouse_over = mouse_over and mouse_pos.y > _confirm_panel.global_position.y and mouse_pos.y < (_confirm_panel.global_position.y + _confirm_panel.get_global_rect().size.y)
-
-	return mouse_over
+func _on_mouse_entered():
+	_mouse_over = true
+	
+func _on_mouse_exited():
+	_mouse_over = false
+	
+#func _is_mouse_over(): 
+	#var mouse_pos = get_global_mouse_position()
+	#var mouse_over = mouse_pos.x > _confirm_panel.global_position.x and mouse_pos.x < (_confirm_panel.global_position.x + _confirm_panel.get_global_rect().size.x)
+	#mouse_over = mouse_over and mouse_pos.y > _confirm_panel.global_position.y and mouse_pos.y < (_confirm_panel.global_position.y + _confirm_panel.get_global_rect().size.y)
+#
+	#return mouse_over
