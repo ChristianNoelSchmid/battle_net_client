@@ -580,8 +580,6 @@ autoplay = true
 script = ExtResource("16_jq5ni")
 
 [node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]
-volume_db = -2.5
-pitch_scale = 4.0
 autoplay = true
 
 [node name="Animator" type="Node" parent="."]
