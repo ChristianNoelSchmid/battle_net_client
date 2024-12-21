@@ -1,4 +1,4 @@
-extends TextureRect 
+extends TextureRect
 
 @export var consider_texture: Texture2D
 @export var confirmed_texture: Texture2D
@@ -12,21 +12,33 @@ signal triggered
 var _status: int = Config.CARD_CONSIDERED
 var _guessing: bool = false
 var _mouse_over = false
-
 var _consider_confirm_visible: bool = false
+var _scrolled = false
+var _item_rect_changed = 0.0
 
-func _process(_delta):
-	if _status != Config.CARD_CONFIRMED and Input.is_action_just_pressed('mouse-left'):
-		if _mouse_over:
-			if _guessing: triggered.emit()
-			elif _consider_confirm_visible: 
-				triggered.emit()
-				_consider_confirm_visible = false
-			else: _consider_confirm_visible = true
+func _ready() -> void:
+	get_parent().get_parent().item_rect_changed.connect(_on_item_rect_changed)
+	
+func _process(delta: float) -> void:
+	if Input.is_action_just_released("mouse-left"):
+		if _mouse_over && _item_rect_changed <= 0:
+			if _status != Config.CARD_CONFIRMED:
+				if _guessing: 
+					triggered.emit()
+				elif _consider_confirm_visible: 
+					triggered.emit()
+					_consider_confirm_visible = false
+				else: 
+					_consider_confirm_visible = true
 		else:
 			_consider_confirm_visible = false
-
-		_confirm_panel.visible = _consider_confirm_visible && !_guessing
+			
+	_confirm_panel.visible = _consider_confirm_visible && !_guessing
+	if _item_rect_changed > 0 && !Input.is_action_pressed("mouse-left"):
+		_item_rect_changed -= delta
+	
+func _on_item_rect_changed():
+	_item_rect_changed = 0.1
 
 ### Getters/Setters ###
 func set_info(cat_idx, card_idx): 

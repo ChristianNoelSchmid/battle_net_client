@@ -1,17 +1,20 @@
 extends Node 
 
 var _cards = [
-	[[0, 0], "chris"],
+
+	[[0, 0], "alyssa c"],
 	[[0, 1], "alyssa q"],
 	[[0, 2], "andrea"],
-	[[0, 3], "zach"],
-	[[0, 4], "alyssa c"],
-	[[0, 5], "kunane"],
-	[[0, 6], "brian"],
-	[[0, 7], "miranda"],
+	[[0, 3], "brian"],
+	[[0, 4], "chris"],
+	[[0, 5], "coraline"],
+	[[0, 6], "kim"],
+	[[0, 7], "kunane"],
 	[[0, 8], "maria"],
-	[[0, 9], "mj"],
-	[[0, 10], "kim"],
+	[[0, 9], "miranda"],
+	[[0, 10], "mj"],
+	[[0, 11], "paisley"],
+	[[0, 12], "zach"],
 	[[1, 0], "nutcracker"],
 	[[1, 1], "fruitcake"],
 	[[1, 2], "uglysweater"],
@@ -20,27 +23,30 @@ var _cards = [
 	[[2, 0], "elf"],
 	[[2, 1], "thepolarexpress"],
 	[[2, 2], "thegrinch"],
+	[[2, 3], "amuppetxmascarroll"],
+	[[2, 4], "itsawonderfullife"],
 ]
 
 var _player_sprites = [
-	"Chris",
+	"Alyssa C",
 	"Alyssa Q",
 	"Andrea",
-	"Zach",
-	"Alyssa C",
-	"Kunane",
-	"Brian",
-	"Miranda",
-	"Maria",
-	"MJ",
+ 	"Brian",
+	"Chris",
+	"Coraline",
 	"Kim",
+	"Kunane",
+	"Maria",
+	"Miranda",
+	"MJ",
 	"Paisley",
-	"Cora",
+	"Zach",
 ]
 
 var _enemy_sprites = [
-	"Possessed Nutcracker",
 	"Wilfred the Esteemed Wizard",
+	"Possessed Nutcracker",
+	"Evil Chris",
 ]
 
 func get_player_sprite(id):
@@ -48,7 +54,8 @@ func get_player_sprite(id):
 	return load("res://assets/players/%s.png" % _player_sprites[id - 1])
 
 func get_enemy_sprite(idx):
-	return load("res://assets/enemies/%s.png" % _enemy_sprites[idx - 1])
+	print("Monster idx: %d" % idx)
+	return load("res://assets/enemies/%s.png" % _enemy_sprites[idx])
 
 func get_card_sprite(cat_idx, card_idx) -> Texture:
 	for i in len(_cards):

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b83whwuwoof2r"]
+
+[ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="1_rk03u"]
+[ext_resource type="Script" path="res://scenes/riddle_scene/riddle_letter_button.gd" id="2_r7lok"]
+
+[sub_resource type="Theme" id="Theme_gga65"]
+default_font = ExtResource("1_rk03u")
+default_font_size = 54
+
+[node name="RiddleLetterButton" type="Button"]
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = -1
+anchor_right = 0.056
+anchor_bottom = 0.099
+offset_right = -64.512
+offset_bottom = -64.152
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_gga65")
+text = "a"
+script = ExtResource("2_r7lok")

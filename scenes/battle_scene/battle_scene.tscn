@@ -1,10 +1,8 @@
-[gd_scene load_steps=32 format=3 uid="uid://b38vyfmsmkp6a"]
+[gd_scene load_steps=33 format=3 uid="uid://b38vyfmsmkp6a"]
 
 [ext_resource type="Script" path="res://scenes/battle_scene/battle_scene.gd" id="1_20jma"]
-[ext_resource type="Texture2D" uid="uid://vmiw8wpsmmky" path="res://assets/cobblestone.png" id="1_gq0ns"]
-[ext_resource type="Texture2D" uid="uid://bwhmman2oflxi" path="res://assets/players/Chris.png" id="3_787ld"]
+[ext_resource type="Texture2D" uid="uid://cpjkk8xep2et0" path="res://assets/battle scene.png" id="2_2jkbn"]
 [ext_resource type="Script" path="res://scenes/battle_scene/battle_positioner.gd" id="4_514xq"]
-[ext_resource type="Texture2D" uid="uid://dy71464adboss" path="res://assets/murder_weapons/murder_weapon_fruit_cake.png" id="4_kolho"]
 [ext_resource type="AnimationLibrary" uid="uid://bkc7nwbpn8vgm" path="res://assets/player.res" id="5_2vtbh"]
 [ext_resource type="Script" path="res://scenes/battle_scene/animator.gd" id="5_sby6p"]
 [ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="5_vcb2u"]
@@ -21,9 +19,24 @@
 [ext_resource type="AudioStream" uid="uid://dd0h4v6274nh2" path="res://assets/Christmas 2022 - Battle.mp3" id="15_4688m"]
 [ext_resource type="Script" path="res://scenes/battle_scene/attack_cover.gd" id="16_bocqf"]
 [ext_resource type="Script" path="res://scenes/battle_scene/music_player.gd" id="16_jq5ni"]
+[ext_resource type="Texture2D" uid="uid://rq5upyohpon4" path="res://assets/heart.png" id="18_eac3o"]
+[ext_resource type="Script" path="res://scenes/battle_scene/panel_type.gd" id="19_2a0et"]
+[ext_resource type="PackedScene" uid="uid://bw27ywob164qw" path="res://scenes/loading_panel/loading_panel.tscn" id="22_5jsh7"]
 
 [sub_resource type="Animation" id="Animation_7ocdj"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_hpqfn"]
 resource_name = "idle"
@@ -92,15 +105,7 @@ _data = {
 
 [sub_resource type="Theme" id="Theme_irt5s"]
 default_font = ExtResource("5_vcb2u")
-default_font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_hbay1"]
-font_size = 32
-outline_size = 2
-outline_color = Color(0.447059, 0.447059, 0.447059, 1)
-shadow_size = 3
-shadow_color = Color(0, 0, 0, 0.615686)
-shadow_offset = Vector2(3, 3)
+default_font_size = 48
 
 [sub_resource type="Theme" id="Theme_up4gy"]
 default_font_size = 64
@@ -112,6 +117,14 @@ default_font = ExtResource("5_vcb2u")
 default_font = ExtResource("5_vcb2u")
 default_font_size = 32
 
+[sub_resource type="LabelSettings" id="LabelSettings_hbay1"]
+font_size = 32
+outline_size = 2
+outline_color = Color(0.447059, 0.447059, 0.447059, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.615686)
+shadow_offset = Vector2(3, 3)
+
 [node name="BattleScene" type="Node"]
 script = ExtResource("1_20jma")
 
@@ -121,21 +134,16 @@ texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -12.0
-offset_right = 790.0
-offset_bottom = 504.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(6, 6)
-texture = ExtResource("1_gq0ns")
-stretch_mode = 1
+texture = ExtResource("2_2jkbn")
+expand_mode = 1
 
 [node name="Player" type="Node2D" parent="."]
-position = Vector2(224, 242)
+position = Vector2(215, 279)
+scale = Vector2(9, 9)
 
 [node name="Sprite" type="Sprite2D" parent="Player"]
-scale = Vector2(7, 7)
-texture = ExtResource("3_787ld")
 
 [node name="BattlePositioner" type="Node" parent="Player"]
 script = ExtResource("4_514xq")
@@ -152,12 +160,10 @@ libraries = {
 autoplay = "idle"
 
 [node name="Enemy" type="Node2D" parent="."]
-position = Vector2(770, 236)
+position = Vector2(900, 294)
+scale = Vector2(9, 9)
 
 [node name="Sprite" type="Sprite2D" parent="Enemy"]
-position = Vector2(-20, 0)
-scale = Vector2(7, 7)
-texture = ExtResource("4_kolho")
 
 [node name="BattlePositioner" type="Node" parent="Enemy"]
 script = ExtResource("4_514xq")
@@ -179,32 +185,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -3.0
-offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1, 0.99661)
 theme = SubResource("Theme_irt5s")
-
-[node name="Panel" type="Panel" parent="UI"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.05
-anchor_right = 0.95
-anchor_bottom = 0.15
-
-[node name="AttackHeading" type="Label" parent="UI/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Wilfred the Esteemed Wizard is ready to attack!"
-label_settings = SubResource("LabelSettings_hbay1")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Control" type="Control" parent="UI"]
 layout_mode = 1
@@ -242,7 +226,7 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
-text = "Pithy Jibe"
+text = "Attack"
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack1/VBoxContainer"]
@@ -276,7 +260,7 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
-text = "Pithy Jibe"
+text = "Attack"
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack2/VBoxContainer"]
@@ -310,7 +294,7 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
-text = "Pithy Jibe"
+text = "Attack"
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack3/VBoxContainer"]
@@ -344,7 +328,7 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
-text = "Pithy Jibe"
+text = "Attack"
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="UI/Control/Attack/Attack4/VBoxContainer"]
@@ -421,10 +405,10 @@ stretch_mode = 4
 
 [node name="Player HP" type="Control" parent="UI"]
 layout_mode = 1
-anchor_left = 0.1
 anchor_top = 0.7
-anchor_right = 0.4
+anchor_right = 0.3
 anchor_bottom = 0.8
+offset_top = -3.05176e-05
 script = ExtResource("8_3if3i")
 
 [node name="HP Panel" type="Panel" parent="UI/Player HP"]
@@ -433,17 +417,27 @@ anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 1.0
 
-[node name="HP" type="Label" parent="UI/Player HP/HP Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Player HP/HP Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.5
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Player HP/HP Panel/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_eac3o")
+expand_mode = 2
+
+[node name="HP" type="Label" parent="UI/Player HP/HP Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme = SubResource("Theme_05lrd")
-text = "❤️ 10"
+text = "10"
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Sub" type="Label" parent="UI/Player HP"]
@@ -467,10 +461,14 @@ flutter_dist = 3
 
 [node name="Monster HP" type="Control" parent="UI"]
 layout_mode = 1
-anchor_left = 0.6
+anchor_left = 0.697
 anchor_top = 0.7
-anchor_right = 0.9
+anchor_right = 0.997
 anchor_bottom = 0.8
+offset_left = 0.0559692
+offset_top = -0.0625305
+offset_right = 0.0557861
+offset_bottom = -0.0625
 script = ExtResource("8_3if3i")
 
 [node name="HP Panel" type="Panel" parent="UI/Monster HP"]
@@ -479,17 +477,27 @@ anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 1.0
 
-[node name="HP" type="Label" parent="UI/Monster HP/HP Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Monster HP/HP Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.5
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Monster HP/HP Panel/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_eac3o")
+expand_mode = 2
+
+[node name="HP" type="Label" parent="UI/Monster HP/HP Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme = SubResource("Theme_05lrd")
-text = "❤️ 10"
+text = "10"
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Sub" type="Label" parent="UI/Monster HP"]
@@ -515,19 +523,56 @@ flutter_dist = 3
 visible = false
 layout_mode = 1
 
-[node name="ButtonBack" type="Button" parent="UI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025
-anchor_top = 0.025
-anchor_right = 0.125
-anchor_bottom = 0.125
-offset_left = -1.33333
-offset_top = -1.5
-offset_right = -1.50834
-offset_bottom = -2.0
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="ButtonBack" type="Button" parent="UI/HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
 theme = SubResource("Theme_8ksgx")
 text = "Back"
+
+[node name="PanelNext" type="Panel" parent="UI/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelNext" type="Label" parent="UI/HBoxContainer/PanelNext"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_hbay1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelType" type="Panel" parent="UI/HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+script = ExtResource("19_2a0et")
+
+[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/PanelType"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.095
+anchor_top = 0.25
+anchor_right = 0.95
+anchor_bottom = 0.75
+offset_left = -0.0320005
+offset_top = 0.0079999
+offset_right = -0.0400085
+offset_bottom = 0.0319977
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("15_4688m")
@@ -542,10 +587,13 @@ autoplay = true
 [node name="Animator" type="Node" parent="."]
 script = ExtResource("5_sby6p")
 
+[node name="LoadingPanel" parent="." instance=ExtResource("22_5jsh7")]
+visible = false
+
 [connection signal="pressed" from="UI/Control/Attack/Attack1" to="." method="attack" binds= [1]]
 [connection signal="pressed" from="UI/Control/Attack/Attack2" to="." method="attack" binds= [2]]
 [connection signal="pressed" from="UI/Control/Attack/Attack3" to="." method="attack" binds= [3]]
 [connection signal="pressed" from="UI/Control/Attack/Attack4" to="." method="attack" binds= [4]]
 [connection signal="pressed" from="UI/Control/Defend" to="." method="defend"]
 [connection signal="on_submit" from="UI/ResultsPanel" to="." method="goto_home"]
-[connection signal="pressed" from="UI/ButtonBack" to="." method="goto_home"]
+[connection signal="pressed" from="UI/HBoxContainer/ButtonBack" to="." method="goto_home"]

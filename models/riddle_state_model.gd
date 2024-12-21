@@ -2,8 +2,8 @@ extends Object
 class_name RiddleStateModel
 
 var text: String
-#var answer_len: int
+var ans_scramb: String
 
 func parse_variant(variant):
 	text = variant.text
-	#answer_len = variant.answer_len
+	ans_scramb = variant.ans_scramb

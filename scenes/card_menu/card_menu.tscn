@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b8olgxfqyoncp"]
+[gd_scene load_steps=18 format=3 uid="uid://b8olgxfqyoncp"]
 
 [ext_resource type="Texture2D" uid="uid://vmiw8wpsmmky" path="res://assets/cobblestone.png" id="1_8lcqh"]
 [ext_resource type="Script" path="res://scenes/card_menu/card_menu.gd" id="1_l411a"]
@@ -9,6 +9,7 @@
 [ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="7_5tynq"]
 [ext_resource type="Texture2D" uid="uid://chbwwgfqg07ri" path="res://assets/blank.png" id="8_wc0tu"]
 [ext_resource type="Script" path="res://scenes/card_menu/win_display.gd" id="9_b4tiu"]
+[ext_resource type="PackedScene" uid="uid://bw27ywob164qw" path="res://scenes/loading_panel/loading_panel.tscn" id="10_xpwjm"]
 
 [sub_resource type="Theme" id="Theme_qiuim"]
 default_font = ExtResource("7_5tynq")
@@ -21,6 +22,45 @@ bg_color = Color(0, 0, 0, 0.67451)
 default_font_size = 48
 
 [sub_resource type="Theme" id="Theme_wro41"]
+
+[sub_resource type="Animation" id="Animation_oa02p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/HBoxContainer/Card1:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/HBoxContainer/Card2:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/HBoxContainer/Card3:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_djv8c"]
 resource_name = "reveal"
@@ -40,23 +80,23 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/HBoxContainer/Card1:visible")
+tracks/1/path = NodePath("VBoxContainer/HBoxContainer/Card2:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0, 0.4, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.045, 1), Vector2(0.045, 1), Vector2(1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/HBoxContainer/Card2:scale")
+tracks/2/path = NodePath("VBoxContainer/HBoxContainer/Card3:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.7),
+"times": PackedFloat32Array(0, 0.8, 1.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0.045, 1), Vector2(0.045, 1), Vector2(1, 1)]
@@ -64,53 +104,38 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/HBoxContainer/Card2:visible")
+tracks/3/path = NodePath("VBoxContainer/HBoxContainer/Card1:self_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("VBoxContainer/HBoxContainer/Card3:scale")
+tracks/4/path = NodePath("VBoxContainer/HBoxContainer/Card2:self_modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.8, 1.1),
+"times": PackedFloat32Array(0, 0.333333, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0.045, 1), Vector2(0.045, 1), Vector2(1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("VBoxContainer/HBoxContainer/Card3:visible")
+tracks/5/path = NodePath("VBoxContainer/HBoxContainer/Card3:self_modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
-[sub_resource type="Animation" id="Animation_oa02p"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/HBoxContainer/Card3:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.733333, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0.045, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wigl3"]
@@ -164,6 +189,7 @@ size_flags_vertical = 3
 theme = SubResource("Theme_qiuim")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
+scroll_deadzone = 4
 
 [node name="Row" type="HBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
@@ -181,10 +207,9 @@ theme_override_constants/separation = 32
 
 [node name="Card" parent="ScrollContainer/Row/Column1" instance=ExtResource("2_j6v4e")]
 visible = false
+custom_minimum_size = Vector2(0, 512)
 layout_mode = 2
 theme = SubResource("Theme_qiuim")
-expand_mode = 4
-stretch_mode = 5
 
 [node name="Column2" type="VBoxContainer" parent="ScrollContainer/Row"]
 layout_mode = 2
@@ -194,9 +219,8 @@ theme_override_constants/separation = 32
 
 [node name="Card2" parent="ScrollContainer/Row/Column2" instance=ExtResource("2_j6v4e")]
 visible = false
+custom_minimum_size = Vector2(0, 512)
 layout_mode = 2
-expand_mode = 4
-stretch_mode = 5
 
 [node name="Column3" type="VBoxContainer" parent="ScrollContainer/Row"]
 layout_mode = 2
@@ -206,9 +230,8 @@ theme_override_constants/separation = 32
 
 [node name="Card2" parent="ScrollContainer/Row/Column3" instance=ExtResource("2_j6v4e")]
 visible = false
+custom_minimum_size = Vector2(0, 512)
 layout_mode = 2
-expand_mode = 4
-stretch_mode = 5
 
 [node name="GuessPanel" type="Control" parent="."]
 layout_mode = 3
@@ -302,49 +325,27 @@ theme = SubResource("Theme_qiuim")
 text = "YOU WIN!"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="Control" parent="WinDisplay/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="WinDisplay/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 theme = SubResource("Theme_qiuim")
+alignment = 1
 
 [node name="Card1" parent="WinDisplay/VBoxContainer/HBoxContainer" instance=ExtResource("2_j6v4e")]
-layout_mode = 1
-anchor_right = 0.33
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(167.4, 251)
+layout_mode = 2
 theme = SubResource("Theme_qiuim")
 expand_mode = 3
-stretch_mode = 5
 
 [node name="Card2" parent="WinDisplay/VBoxContainer/HBoxContainer" instance=ExtResource("2_j6v4e")]
-layout_mode = 1
-anchor_left = 0.33
-anchor_right = 0.66
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-pivot_offset = Vector2(167.4, 0)
+layout_mode = 2
 theme = SubResource("Theme_qiuim")
 expand_mode = 3
-stretch_mode = 5
 
 [node name="Card3" parent="WinDisplay/VBoxContainer/HBoxContainer" instance=ExtResource("2_j6v4e")]
-layout_mode = 1
-anchor_left = 0.66
-anchor_right = 0.99
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-scale = Vector2(0.045, 1)
-pivot_offset = Vector2(167.4, 0)
+layout_mode = 2
 theme = SubResource("Theme_qiuim")
 expand_mode = 3
-stretch_mode = 5
 
 [node name="Button" type="Button" parent="WinDisplay/VBoxContainer"]
 layout_mode = 2
@@ -403,6 +404,9 @@ libraries = {
 "": SubResource("AnimationLibrary_wigl3")
 }
 autoplay = "reveal"
+
+[node name="LoadingPanel" parent="." instance=ExtResource("10_xpwjm")]
+visible = false
 
 [connection signal="pressed" from="ButtonBack" to="." method="on_button_back_pressed"]
 [connection signal="pressed" from="GuessPanel/VBoxContainer/Buttons/GuessButton" to="." method="_on_guess_pressed"]

@@ -1,17 +1,27 @@
 [{
-	"name": "Chris",
-	"attacks": [
-		"Attack 1",
-		"Attack 2",
-		"Attack 3",
-		"Attack 4"
-	]
+	"name": "Alyssa C.",
 }, {
 	"name": "Alyssa Q.",
-	"attacks": [
-		"Attack 1",
-		"Attack 2",
-		"Attack 3",
-		"Attack 4"
-	]
+},  {
+	"name": "Andrea",
+}, {
+	"name": "Brian",
+}, {
+	"name": "Chris",
+}, {
+	"name": "Coraline",
+}, {
+	"name": "Kim",
+}, {
+	"name": "Kunane",
+}, {
+	"name": "Maria",
+}, {
+	"name": "Miranda",
+}, {
+	"name": "MJ",
+}, {
+	"name": "Paisley",
+}, {
+	"name": "Zach",
 }]

@@ -14,7 +14,3 @@ func set_power(power: int) -> void:
 		else:
 			attack_labels[i].disabled = false
 			attack_labels[i].modulate = Color.GREEN
-
-func set_attack_text(text: Array) -> void:
-	for i in len(attack_labels):
-		attack_labels[i].find_child('VBoxContainer').find_child('Label').text = text[i]

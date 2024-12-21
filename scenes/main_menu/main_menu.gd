@@ -32,6 +32,7 @@ func _process(_delta):
 
 		# Otherwise, to battle!
 		elif QuestState.state.quest_type == Config.BATTLE_QUEST_IDX:
+			MainMusicPlayer.stop()
 			get_tree().change_scene_to_file("res://scenes/battle_scene/battle_scene.tscn")
 		elif QuestState.state.quest_type == Config.RIDDLE_QUEST_IDX:
 			get_tree().change_scene_to_file("res://scenes/riddle_scene/riddle_scene.tscn")

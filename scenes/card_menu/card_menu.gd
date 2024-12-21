@@ -12,10 +12,12 @@ signal loading_toggled
 @onready var _cancel_button: Button = $GuessPanel/VBoxContainer/Buttons/CancelButton
 @onready var _win_display = $WinDisplay
 @onready var _incorrect_display = $IncorrectDisplay
+@onready var _loading_panel = $LoadingPanel
 
 var _cards = []
 var _state_loaded = false
 var _guessing_scheme_active = false
+var scrolled = false
 
 var _state_http_request: HTTPRequest
 var _confirm_http_request: HTTPRequest
@@ -42,8 +44,9 @@ func _ready():
 	add_child(_guess_http_request)
 
 	loading_toggled.emit()
+	_loading_panel.show()
 	import_cards()
-	
+		
 	if GameState.state.pl_guessed_today:
 		_button_panel.hide()
 		_already_guessed_label.show()
@@ -54,6 +57,7 @@ func _ready():
 func _process(_delta):
 	if not _state_loaded:
 		import_state()
+		_loading_panel.hide()
 		_state_loaded = true
 
 # Imports all _cards found in the _resources JSON	
@@ -104,6 +108,7 @@ func _on_state_response(_result, _response_code, _headers, body):
 		else: card.toggle_consider_status()
 
 	loading_toggled.emit()
+	_loading_panel.hide()
 
 # Called when a resource card is pressed
 func card_triggered(col, row): 
@@ -119,6 +124,7 @@ func card_triggered(col, row):
 			HTTPClient.METHOD_POST,
 			JSON.stringify({ "cat_idx": col, "card_idx": row, "confirmed": _cards[col][row].get_status() == Config.CARD_CONSIDERED })
 		)
+		_loading_panel.show()
 		loading_toggled.emit()
 
 	# If the menu is in the guess scheme
@@ -140,6 +146,7 @@ func _on_card_guessed_response(_result, _response_code, _headers, _body):
 	_cards[_considered_col_row[0]][_considered_col_row[1]].toggle_consider_status()
 	_considered_col_row = []
 	loading_toggled.emit()
+	_loading_panel.hide()
 
 ## Toggled when the "Guess" button is pressed. Turns the guessing scheme on and off for the UI
 func _on_guess_pressed():
@@ -155,6 +162,7 @@ func _on_guess_pressed():
 			for card in col:
 				card.toggle_guessing_scheme()
 	else:
+		_loading_panel.show()
 		_guess_http_request.request("%s/game/guess" % Config.URL_ROOT,
 			["Authorization: Bearer %s" % Auth.access_token, "Content-Type: application/json"],
 			HTTPClient.METHOD_POST,
@@ -181,6 +189,7 @@ func _on_guess_response(_result, _response_code, _headers, body):
 		var tex2 = _cards[1][res.correct[1]].texture
 		var tex3 = _cards[2][res.correct[2]].texture
 		_win_display.display(tex1, tex2, tex3)
+	_loading_panel.hide()
 
 func _on_cancel_pressed():
 	_guess_button.disabled = false

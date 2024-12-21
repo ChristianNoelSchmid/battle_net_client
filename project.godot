@@ -8,13 +8,18 @@
 
 config_version=5
 
+[animation]
+
+warnings/check_invalid_track_paths=false
+
 [application]
 
-config/name="Christmas 2022 Client"
+config/name="Christmas Quest"
 run/main_scene="res://scenes/login_scene/login_scene.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Chopper Studios/BattleNet"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/image="res://assets/pwa_icon_lg.png"
 config/icon="res://icon.svg"
 
 [autoload]
@@ -25,6 +30,7 @@ QuestState="*res://globals/quest_state.gd"
 GameState="*res://globals/game_state.gd"
 Resources="*res://globals/resources.gd"
 Profiles="*res://globals/profiles.gd"
+MainMusicPlayer="*res://globals/main_music_player.gd"
 
 [dotnet]
 

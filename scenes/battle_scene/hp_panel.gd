@@ -1,6 +1,6 @@
 extends Control
 
-@onready var label_hp = $"HP Panel/HP"
+@onready var label_hp = $"HP Panel/HBoxContainer/HP"
 @onready var sub_health = $Sub
 
 # Whether the first battle message has been received from the server
@@ -10,7 +10,7 @@ var recvd_first_msg = false
 var current_health = 0
 
 func set_health(health):
-	label_hp.text = "❤️ %s" % health
+	label_hp.text = "%s" % health
 
 	if recvd_first_msg:
 		var dmg_dealt = current_health - health

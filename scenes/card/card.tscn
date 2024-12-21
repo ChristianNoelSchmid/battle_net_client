@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://qtn1ifib34pf"]
 
+[ext_resource type="Texture2D" uid="uid://b63ggg75ix6s2" path="res://assets/cards/alyssa c.png" id="1_7jnyv"]
 [ext_resource type="Script" path="res://scenes/card/card.gd" id="1_fimft"]
-[ext_resource type="Texture2D" uid="uid://bpca0k0mqysaf" path="res://assets/cards/chris.png" id="1_reelr"]
 [ext_resource type="Texture2D" uid="uid://pd4d8wf0w0k2" path="res://assets/card.png" id="2_f06lw"]
 [ext_resource type="Texture2D" uid="uid://c8v5eycnhfbdu" path="res://assets/question_mark.png" id="3_y4y0m"]
 [ext_resource type="FontFile" uid="uid://d1gobefxlnffi" path="res://assets/VT323-Regular.ttf" id="5_e4tco"]
@@ -19,9 +19,9 @@ anchor_right = 0.431
 anchor_bottom = 1.077
 offset_right = 0.487976
 offset_bottom = 20.9409
-texture = ExtResource("1_reelr")
+texture = ExtResource("1_7jnyv")
 expand_mode = 5
-stretch_mode = 4
+stretch_mode = 5
 script = ExtResource("1_fimft")
 consider_texture = ExtResource("3_y4y0m")
 confirmed_texture = ExtResource("7_w8c37")
@@ -88,5 +88,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
+[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

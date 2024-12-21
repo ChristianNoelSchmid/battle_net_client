@@ -1,1 +1,17 @@
-<svg height="128" width="128" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="124" height="124" rx="14" fill="#363d52" stroke="#212532" stroke-width="4"/><g transform="scale(.101) translate(122 122)"><g fill="#fff"><path d="M105 673v33q407 354 814 0v-33z"/><path fill="#478cbf" d="m105 673 152 14q12 1 15 14l4 67 132 10 8-61q2-11 15-15h162q13 4 15 15l8 61 132-10 4-67q3-13 15-14l152-14V427q30-39 56-81-35-59-83-108-43 20-82 47-40-37-88-64 7-51 8-102-59-28-123-42-26 43-46 89-49-7-98 0-20-46-46-89-64 14-123 42 1 51 8 102-48 27-88 64-39-27-82-47-48 49-83 108 26 42 56 81zm0 33v39c0 276 813 276 813 0v-39l-134 12-5 69q-2 10-14 13l-162 11q-12 0-16-11l-10-65H447l-10 65q-4 11-16 11l-162-11q-12-3-14-13l-5-69z"/><path d="M483 600c3 34 55 34 58 0v-86c-3-34-55-34-58 0z"/><circle cx="725" cy="526" r="90"/><circle cx="299" cy="526" r="90"/></g><g fill="#414042"><circle cx="307" cy="532" r="60"/><circle cx="717" cy="532" r="60"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 144 144" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-423,-3927)">
+        <g transform="matrix(0.556002,0,0,0.556002,161.532,1719.12)">
+            <g id="Background" transform="matrix(8.54996,0,0,8.54996,-21420.7,-11366.4)">
+                <use xlink:href="#_Image1" x="2561" y="1798" width="29px" height="22px"/>
+            </g>
+            <g transform="matrix(1.10193,0,0,1.10193,-33.3701,-413.88)">
+                <rect x="457.047" y="3979.26" width="235.034" height="235.034" style="fill-opacity:0;"/>
+            </g>
+        </g>
+    </g>
+    <defs>
+        <image id="_Image1" width="29px" height="22px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAWCAYAAAA8VJfMAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABuklEQVRIicWVr28CMRTHv0cwZArDnUFMTmwhjL9gyZFMIVBDMjGxf4A/gX8AMTEsCjG1hEv2F8Agm5hE3EQ7gyLITpBX3vXacssEX3Xta9+n78e1wAkU+IyzMFT0ffF6AwCoNyeZPen7nQKAr9s3PdeW0uvXaZyFoYqFwPXjOYbTnZ4nOInDAGDQrWA43XnBVgNFGAsBADmwS4NuBYvRGgCQRJETXLIBYyEQC4EkinIb5o2Nd0xAn3JQYB8ZgBx43tigtapm1rZW1Qw4iSLQoXlPOKG0aDjdZcA+mQfhJeE+nVBgXxcT7IrKFjkBfT2QKbSrY0lpp+Z0VH/5yc25Otla08VorSM21X/+9I45cDFaW2uroWSglLrA4/tL75gDuT8OLtGErZZF/k2baJ+rTAFBbbVsSxnwE6adGvpPHwiCQ4mUUhg/XGVqau6jyOnCKAGHq42n9Nj9WVQ81cTRjvnFzYFmE8RnEsk2dI75gSmDAPC97OnHokwLzdfDJhvAp7aUQbrsKdN/2b2lmJJt6D2MLRjrf3oM8F/9CUrgInM+HU0vf7TNB9u0azUnXp+FfwvqbpuKNOHJ9Qu9//ZRTJzKoQAAAABJRU5ErkJggg=="/>
+    </defs>
+</svg>

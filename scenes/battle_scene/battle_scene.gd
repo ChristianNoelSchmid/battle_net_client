@@ -1,7 +1,8 @@
 extends Node 
 
 var ws: WebSocketPeer
-@onready var attack_heading: Label = $UI/Panel/AttackHeading
+@onready var attack_heading: Label = $UI/HBoxContainer/PanelNext/LabelNext
+@onready var attack_type = $UI/HBoxContainer/PanelType
 
 @onready var player_sprite: Sprite2D = $Player/Sprite
 @onready var enemy_sprite: Sprite2D = $Enemy/Sprite
@@ -14,6 +15,7 @@ var ws: WebSocketPeer
 @onready var pl_health_bar = $"UI/Player HP"
 @onready var monst_health_bar = $"UI/Monster HP"
 @onready var results_panel = $UI/ResultsPanel
+@onready var _loading_panel = $LoadingPanel
 
 @onready var music_player = $MusicPlayer
 
@@ -22,28 +24,35 @@ var enemy_attack_ts: float = 0.0
 var initial = true
 
 func _ready():
-	# Connect to the server via WebSocket
-	ws = WebSocketPeer.new()
-	var err = ws.connect_to_url("ws://127.0.0.1:3005/battle")
-	if err != OK:
-		print(err)
+	est_con()	
 
 	player_sprite.texture = Resources.get_player_sprite(GameState.state.user_id)
 	enemy_sprite.texture = Resources.get_enemy_sprite(QuestState.state.monster_state.res_idx)
 
 	var profile = Profiles.get_profile(GameState.state.user_id)
-	power_bar.set_attack_text(profile.attacks)
 
+func est_con():
+	_loading_panel.show()
+	print("Connecting to websocket server...")
+	ws = WebSocketPeer.new()
+	# var err = ws.connect_to_url("wss://christmas.christianssoftware.com/api/v1/battle")
+	var err = ws.connect_to_url("ws://127.0.0.1:3005/api/v1/battle")
+	if err != OK:
+		print(err)
 
 func _process(_delta):
 	ws.poll()
 
+	if ws.get_ready_state() == WebSocketPeer.STATE_CLOSED:
+		est_con()
+		
 	while ws.get_available_packet_count():
 		var msg = ws.get_packet().get_string_from_utf8()
 		if msg == "Auth?":
 			print("Sending access token")
 			ws.send_text(Auth.access_token)
 		else:
+			_loading_panel.hide()
 			print("Received data: ", msg)
 			var json = JSON.parse_string(msg)
 			bat_status = load("res://models/battle_result_model.gd").new()
@@ -56,6 +65,7 @@ func _process(_delta):
 				if initial:
 					pl_health_bar.set_health(bat_status.next.pl_stats.health)
 					attack_heading.text = bat_status.next.next_action.flv_text
+					attack_type.set_next(bat_status.next.next_action.idx, bat_status.next.next_action.pow)
 				elif bat_status.next.pl_dmg_dealt > 0:
 					enemy_animator.hit()
 
@@ -63,6 +73,7 @@ func _process(_delta):
 				enemy_animator.defeat()
 				monst_health_bar.subtract_health(bat_status.victory.pl_dmg_dealt)
 				attack_heading.visible = false
+				attack_type.clear()
 				ws.close()
 				QuestState.clear_current()
 
@@ -84,6 +95,7 @@ func _process(_delta):
 				pl_health_bar.set_health(bat_status.next.pl_stats.health)
 				player_animator.hit()
 			attack_heading.text = bat_status.next.next_action.flv_text
+			attack_type.set_next(bat_status.next.next_action.idx, bat_status.next.next_action.pow)
 			action_cover.hide()
 		
 		if bat_status.defeat:
@@ -93,6 +105,7 @@ func _process(_delta):
 			results_panel.show_defeat()
 			player_animator.defeat()
 			music_player.stop()
+			attack_type.clear()
 			
 			ws.close()
 			QuestState.clear_current()
@@ -120,4 +133,5 @@ func _on_results_button_pressed():
 	
 func goto_home():	
 	ws.close()
+	MainMusicPlayer.play()
 	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")

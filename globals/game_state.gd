@@ -6,12 +6,13 @@ var _loading = false
 
 func is_loading(): return _loading
 
-func initialize():
+func _ready() -> void:
 	_game_state_http_request = HTTPRequest.new()
 	_game_state_http_request.request_completed.connect(_on_game_state_response)
 	if _game_state_http_request.get_parent() != self:
 		add_child(_game_state_http_request)
-		
+
+func initialize():
 	state = null
 	_get_game_state()
 	_loading = true
